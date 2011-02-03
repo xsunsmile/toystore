@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    toystore (0.5)
+    toystore (0.6)
       activemodel (~> 3.0.3)
       activesupport (~> 3.0.3)
       adapter (~> 0.5.1)
