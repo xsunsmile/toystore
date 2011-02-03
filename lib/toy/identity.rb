@@ -11,6 +11,9 @@ module Toy
         @key_factory = case name_or_factory
         when :uuid
           UUIDKeyFactory.new
+        when :object_id
+          require 'toy/identity/object_id_key_factory'
+          ObjectIdKeyFactory.new
         else
           name_or_factory
         end

@@ -73,23 +73,9 @@ describe Toy::Persistence do
   end
 
   describe ".store_key" do
-    it "returns namespace and id" do
+    it "returns id" do
       doc = User.new
-
-      User.store_key(doc.id).should == "User:#{doc.id}"
-      User.namespace('Crazy')
-      User.store_key(doc.id).should == "Crazy:#{doc.id}"
-    end
-  end
-
-  describe ".namespace" do
-    it "defaults to class name" do
-      User.namespace.should == 'User'
-    end
-
-    it "sets if argument and reads if not" do
-      User.namespace('CrazyUser')
-      User.namespace.should == 'CrazyUser'
+      User.store_key(doc.id).should == doc.id
     end
   end
 
@@ -167,9 +153,9 @@ describe Toy::Persistence do
   end
 
   describe "#store_key" do
-    it "returns pluralized human name and id" do
+    it "returns id" do
       doc = User.new
-      doc.store_key.should == "User:#{doc.id}"
+      doc.store_key.should == doc.id
     end
   end
 
