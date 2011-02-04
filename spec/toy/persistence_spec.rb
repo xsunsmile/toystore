@@ -13,6 +13,11 @@ describe Toy::Persistence do
       User.store.should == Adapter[:memory].new({})
     end
 
+    it "defaults options to empty hash" do
+      Adapter[:memory].should_receive(:new).with({}, {})
+      User.store(:memory, {})
+    end
+
     it "works with options" do
       Adapter[:memory].should_receive(:new).with({}, :something => true)
       User.store(:memory, {}, :something => true)

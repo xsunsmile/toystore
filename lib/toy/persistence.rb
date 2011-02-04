@@ -3,7 +3,7 @@ module Toy
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def store(name=nil, client=nil, options=nil)
+      def store(name=nil, client=nil, options={})
         assert_client(name, client)
         @store = Adapter[name].new(client, options) if !name.nil? && !client.nil?
         assert_store(name, client, 'store')
