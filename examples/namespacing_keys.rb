@@ -9,6 +9,10 @@ $:.unshift(lib_path)
 require 'toystore'
 
 class NamespacedUUIDKeyFactory < Toy::Identity::AbstractKeyFactory
+  def key_type
+    String
+  end
+
   def next_key(object)
     [object.class.name, SimpleUUID::UUID.new.to_guid].join(':')
   end
