@@ -120,7 +120,7 @@ module Toy
           store.write(key, attrs)
           log_operation('SET', store, key, attrs)
           persist
-          each_embedded_object(&:persist)
+          each_embedded_object { |doc| doc.send(:persist) }
           true
         end
     end
