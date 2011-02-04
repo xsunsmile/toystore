@@ -8,20 +8,20 @@ module Toy
 
         if has_cache?
           value = cache.read(key)
-          log_operation('RTG', cache, key, value)
+          log_operation('RTG', self, cache, key, value)
         end
 
         if value.nil?
           value = store.read(key)
-          log_operation('GET', store, key, value)
+          log_operation('GET', self, store, key, value)
 
           if has_cache?
             cache.write(key, value)
-            log_operation('RTS', cache, key, value)
+            log_operation('RTS', self, cache, key, value)
           end
         end
 
-        load(value)
+        load(key, value)
       end
 
       def get!(id)
@@ -43,13 +43,14 @@ module Toy
       def key?(id)
         key = store_key(id)
         value = store.key?(key)
-        log_operation('KEY', store, key, value)
+        log_operation('KEY', self, store, key, value)
         value
       end
       alias :has_key? :key?
 
-      def load(attrs)
+      def load(key, attrs)
         return nil if attrs.nil?
+        attrs['id'] = key
         allocate.initialize_from_database(attrs)
       end
     end

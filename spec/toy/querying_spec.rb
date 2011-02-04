@@ -88,7 +88,7 @@ describe Toy::Querying do
   end
 
   describe ".load (with hash)" do
-    before    { @doc = User.load(:id => '1', :name => 'John') }
+    before    { @doc = User.load('1', :name => 'John') }
     let(:doc) { @doc }
 
     it "returns instance" do

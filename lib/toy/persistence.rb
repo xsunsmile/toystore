@@ -92,7 +92,7 @@ module Toy
       def delete
         key = store_key
         @_destroyed = true
-        logger.debug("ToyStore DEL #{key.inspect}")
+        logger.debug("ToyStore DEL #{self.class.name} #{key.inspect}")
         store.delete(key)
       end
 
@@ -111,14 +111,13 @@ module Toy
 
         def persist!
           key, attrs = store_key, persisted_attributes
-
+          attrs.delete('id') # no need to persist id as that is key
           if self.class.has_cache?
             cache.write(key, attrs)
-            log_operation('WTS', cache, key, attrs)
+            log_operation('WTS', self, cache, key, attrs)
           end
-
           store.write(key, attrs)
-          log_operation('SET', store, key, attrs)
+          log_operation('SET', self, store, key, attrs)
           persist
           each_embedded_object { |doc| doc.send(:persist) }
           true

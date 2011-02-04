@@ -315,7 +315,6 @@ describe Toy::List do
     end
 
     it "sets the inverse association" do
-      # @game.chats.should include(@chat)
       @chat.game.should == @game
     end
   end

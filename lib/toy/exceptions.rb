@@ -26,4 +26,16 @@ module Toy
       super("#{adapter.name.to_s.capitalize} adapter does not support locking")
     end
   end
+
+  class InvalidKeyFactory < Error
+    def initialize(name_or_factory)
+      super("#{name_or_factory.inspect} is not a valid name and did not respond to next_key and key_type")
+    end
+  end
+
+  class InvalidKey < Error
+    def initialize(*)
+      super("Key may not be nil")
+    end
+  end
 end

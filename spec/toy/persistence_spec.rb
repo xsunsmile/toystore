@@ -95,7 +95,6 @@ describe Toy::Persistence do
     it "creates key in database with attributes" do
       User.store.read(doc.store_key).should == {
         'name' => 'John',
-        'id'   => doc.id,
         'age'  => 50,
       }
     end
@@ -286,9 +285,10 @@ describe Toy::Persistence do
 
   describe "with cache store" do
     before do
+      User.attribute(:name, String)
       @cache  = User.cache(:memory, {})
       @memory = User.store(:memory, {})
-      @user   = User.create
+      @user   = User.create(:name => 'John')
     end
 
     let(:cache)   { @cache }
@@ -296,8 +296,8 @@ describe Toy::Persistence do
     let(:user)    { @user }
 
     it "writes to cache and store" do
-      cache[user.store_key].should == user.persisted_attributes
-      memory[user.store_key].should    == user.persisted_attributes
+      cache[user.store_key].should  == {'name' => 'John'}
+      memory[user.store_key].should == {'name' => 'John'}
     end
   end
 end

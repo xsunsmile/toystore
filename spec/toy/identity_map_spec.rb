@@ -24,7 +24,7 @@ describe Toy::IdentityMap do
   end
 
   it "adds to map on load" do
-    user = User.load({'id' => '1'})
+    user = User.load('1', 'id' => '1')
     user.should be_in_identity_map
   end
 
@@ -84,7 +84,7 @@ describe Toy::IdentityMap do
 
     it "does not add to map on load" do
       User.identity_map_off
-      user = User.load('id' => '1')
+      user = User.load('1', 'name' => 'John')
       user.should_not be_in_identity_map
     end
 

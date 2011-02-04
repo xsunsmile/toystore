@@ -14,7 +14,8 @@ module Toy
       options[:only]   = Array.wrap(options[:only]).map(&:to_sym)
       options[:except] = Array.wrap(options[:except]).map(&:to_sym)
 
-      serializable_stuff = serializable_attributes.map(&:to_sym) + self.class.embedded_lists.keys.map(&:to_sym)
+      serializable_stuff =  serializable_attributes.map(&:to_sym) +
+                            self.class.embedded_lists.keys.map(&:to_sym)
 
       if options[:only].any?
         serializable_stuff &= options[:only]

@@ -49,15 +49,15 @@ module Toy
         return nil unless identity_map_on?
         key = store_key(id)
         if record = identity_map[key]
-          logger.debug("ToyStore IMG #{key.inspect}")
+          logger.debug("ToyStore IMG #{self.name} #{key.inspect}")
           record
         end
       end
 
-      def load(attrs)
+      def load(key, attrs)
         return nil if attrs.nil?
 
-        if instance = identity_map[store_key(attrs['id'])]
+        if instance = identity_map[store_key(key)]
           instance
         else
           super.tap { |doc| doc.add_to_identity_map }
@@ -83,14 +83,14 @@ module Toy
       return unless self.class.identity_map_on?
       key = store_key
       identity_map[key] = self
-      logger.debug("ToyStore IMS #{key.inspect}")
+      logger.debug("ToyStore IMS #{self.class.name} #{key.inspect}")
     end
 
     def remove_from_identity_map
       return unless self.class.identity_map_on?
       key = store_key
       identity_map.delete(key)
-      logger.debug("ToyStore IMD #{key.inspect}")
+      logger.debug("ToyStore IMD #{self.class.name} #{key.inspect}")
     end
 
     private

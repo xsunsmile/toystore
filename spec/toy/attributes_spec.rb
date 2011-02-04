@@ -52,6 +52,10 @@ describe Toy::Attributes do
       @game.persisted_attributes.should have_key('moves')
     end
 
+    it "includes ids of embedded" do
+      @game.persisted_attributes['moves'][0].should have_key('id')
+    end
+
     it "does not include virtual attributes" do
       @game.persisted_attributes.should_not have_key(:creator_score)
     end
@@ -327,6 +331,12 @@ describe Toy::Attributes do
       @user = User.create(:name => 'John')
     end
     let(:user) { @user }
+
+    it "reloads id from database" do
+      id = user.id
+      user.reload
+      user.id.should == id
+    end
 
     it "reloads record from the database" do
       user.name = 'Steve'

@@ -5,7 +5,6 @@ module Toy
 
     included do
       attribute_method_suffix('', '=', '?')
-      attribute :id, String
     end
 
     module ClassMethods
@@ -42,6 +41,7 @@ module Toy
 
       def reload
         if attrs = store.read(store_key)
+          attrs['id'] = store_key
           instance_variables.each        { |ivar| instance_variable_set(ivar, nil) }
           initialize_attributes_with_defaults
           self.attributes = attrs

@@ -34,7 +34,12 @@ module Toy
 
       def replace(instances)
         @target = instances.map do |instance|
-          instance = instance.is_a?(proxy_class) ? instance : proxy_class.load(instance)
+          instance = if instance.is_a?(proxy_class)
+            instance
+          else
+            key = instance.delete('id')
+            proxy_class.load(key, instance)
+          end
           assign_reference(instance)
         end
       end

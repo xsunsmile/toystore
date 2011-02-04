@@ -15,13 +15,20 @@ module Toy
           require 'toy/identity/object_id_key_factory'
           ObjectIdKeyFactory.new
         else
-          name_or_factory
+          if name_or_factory.respond_to?(:next_key) &&
+             name_or_factory.respond_to?(:key_type)
+            name_or_factory
+          else
+            raise InvalidKeyFactory.new(name_or_factory)
+          end
         end
+        attribute :id, @key_factory.key_type
+        @key_factory
       end
 
       def next_key(object = nil)
         @key_factory.next_key(object).tap do |key|
-          raise "Keys may not be nil" if key.nil?
+          raise InvalidKey.new if key.nil?
         end
       end
     end

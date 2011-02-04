@@ -31,5 +31,6 @@ Rspec.configure do |c|
   c.before(:each) do
     Toy.clear
     Toy.reset
+    Toy.key_factory = nil
   end
 end

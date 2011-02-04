@@ -14,7 +14,7 @@ module Toy
           invalid = value.compact.select { |o| !o.valid? }
           if invalid.any?
             record.errors.add(name, 'is invalid')
-            logger.debug("ToyStore IEM")
+            logger.debug("ToyStore #{self.name} IEM")
             invalid.each do |o|
               logger.debug("  #{o.attributes.inspect} - #{o.errors.full_messages.inspect}")
             end

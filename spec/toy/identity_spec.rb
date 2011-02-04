@@ -13,12 +13,12 @@ describe Toy::Identity do
     end
 
     it "should set key factory passed in factory" do
-      factory = Toy::Identity::UUIDKeyFactory
+      factory = Toy::Identity::UUIDKeyFactory.new
       User.key(factory).should == factory
     end
 
     it "should use Toy.key_factory by default" do
-      key_factory     = mock
+      key_factory     = Toy::Identity::UUIDKeyFactory.new
       Toy.key_factory = key_factory
       klass           = Class.new { include Toy::Store }
 
@@ -31,14 +31,14 @@ describe Toy::Identity do
 
   describe ".next_key" do
     it "should call the next key on the key factory" do
-      factory = Toy::Identity::UUIDKeyFactory
+      factory = Toy::Identity::UUIDKeyFactory.new
       factory.should_receive(:next_key).and_return('some_key')
       User.key(factory)
       User.next_key.should == 'some_key'
     end
 
     it "should raise an exception for nil key" do
-      factory = Toy::Identity::UUIDKeyFactory
+      factory = Toy::Identity::UUIDKeyFactory.new
       factory.should_receive(:next_key).and_return(nil)
       User.key(factory)
       lambda { User.next_key }.should raise_error
