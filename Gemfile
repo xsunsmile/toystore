@@ -7,6 +7,7 @@ group(:development) do
   gem 'timecop',    '~> 0.3.5'
   gem 'tzinfo',     '~> 0.3.23'
   gem 'log_buddy',  '~> 0.5.0'
+  gem 'rack-test'
 
   gem 'bson'
   gem 'bson_ext'

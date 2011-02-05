@@ -43,6 +43,10 @@ module Toy
       model.identity_map.clear  if model.identity_map_on?
     end
   end
+
+  module Middleware
+    autoload 'IdentityMap', 'toy/middleware/identity_map'
+  end
 end
 
 require 'toy/exceptions'
