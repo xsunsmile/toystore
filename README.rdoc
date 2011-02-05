@@ -2,7 +2,17 @@
 
 An object mapper for anything that can read, write and delete data.
 
-See examples/models.rb for potential direction. The idea is that any key-value store (via adapters) that supports read, write, delete will work (memcache, membase, redis, couch, toyko. Potentially even RESTFUL services or sqlite with a single key-value table?)
+See examples/ for potential direction. The idea is that any key-value store (via adapters) that supports read, write, delete will work (memcache, membase, mongo, redis, couch, toyko. Potentially even RESTFUL services or sqlite with a single key-value table?)
+
+== Identity Map
+
+By default, Toystore has identity map turned on. It assumes that any Toystore model has a unique id across all models. This means you either need to use the default uuid id's, object_id's (included), some other unique id, or create your own key factory that namespaces to model (see examples).
+
+You also need to clear the map before each request. For this, there is a provided piece of middleware that you can use.
+
+    use(Toy::Middleware::IdentityMap)
+
+It is autoloaded, so just add it to your config.ru or sinatra/rails app as you would any other middleware and you are good to go.
 
 == Note on Patches/Pull Requests
 
