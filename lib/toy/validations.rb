@@ -38,7 +38,7 @@ module Toy
       end
 
       def save!
-        save || raise(RecordInvalidError.new(self))
+        save || raise(RecordInvalid.new(self))
       end
     end
   end

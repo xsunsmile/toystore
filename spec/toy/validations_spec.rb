@@ -127,8 +127,8 @@ describe Toy::Validations do
         @doc = User.new
       end
 
-      it "raises an RecordInvalidError" do
-        lambda { @doc.save! }.should raise_error(Toy::RecordInvalidError)
+      it "raises an RecordInvalid" do
+        lambda { @doc.save! }.should raise_error(Toy::RecordInvalid)
       end
     end
   end
@@ -142,8 +142,8 @@ describe Toy::Validations do
     end
 
     context "with invalid" do
-      it "raises an RecordInvalidError" do
-        lambda { User.create! }.should raise_error(Toy::RecordInvalidError)
+      it "raises an RecordInvalid" do
+        lambda { User.create! }.should raise_error(Toy::RecordInvalid)
       end
     end
   end

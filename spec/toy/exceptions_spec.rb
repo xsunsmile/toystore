@@ -1,6 +1,6 @@
 require 'helper'
 
-describe Toy::RecordInvalidError do
+describe Toy::RecordInvalid do
   uses_constants('User')
 
   before do
@@ -13,6 +13,6 @@ describe Toy::RecordInvalidError do
   it "should include a message of the errors" do
     user = User.new
     user.should_not be_valid
-    Toy::RecordInvalidError.new(user).message.should == "Invalid record: Name can't be blank and Age can't be blank"
+    Toy::RecordInvalid.new(user).message.should == "Invalid record: Name can't be blank and Age can't be blank"
   end
 end

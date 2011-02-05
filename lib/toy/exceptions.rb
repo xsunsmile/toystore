@@ -1,7 +1,7 @@
 module Toy
   class Error < StandardError; end
 
-  class RecordInvalidError < Error
+  class RecordInvalid < Error
     attr_reader :record
     def initialize(record)
       @record = record
@@ -12,18 +12,6 @@ module Toy
   class NotFound < Error
     def initialize(id)
       super("Could not find document with id: #{id.inspect}")
-    end
-  end
-
-  class UndefinedLock < Error
-    def initialize(klass, name)
-      super("Undefined lock :#{name} for class #{klass.name}")
-    end
-  end
-
-  class AdapterNoLocky < Error
-    def initialize(adapter)
-      super("#{adapter.name.to_s.capitalize} adapter does not support locking")
     end
   end
 
