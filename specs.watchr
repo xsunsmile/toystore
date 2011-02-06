@@ -34,7 +34,7 @@ def run_spec(path)
   path.gsub!(file_name, file_name + "_spec")
   if File.exists?(path)
     system('clear')
-    run(%Q(bundle exec spec #{path}))
+    run(%Q(bundle exec rspec #{path}))
   end
 end
 
