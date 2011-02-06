@@ -29,7 +29,7 @@ module Toy
       def initialize(attrs={})
         @_new_record = true unless defined?(@_new_record)
         initialize_attributes_with_defaults
-        self.attributes = attrs
+        send(:attributes=, attrs, @_new_record)
         write_attribute :id, self.class.next_key(self) unless id?
       end
 
@@ -78,7 +78,7 @@ module Toy
         end
       end
 
-      def attributes=(attrs)
+      def attributes=(attrs, *)
         return if attrs.nil?
         attrs.each do |key, value|
           if attribute_method?(key)

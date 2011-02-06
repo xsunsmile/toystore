@@ -31,14 +31,30 @@ describe Toy::MassAssignmentSecurity do
       user.name.should == 'John'
     end
 
+    it "should ignore inaccessible attribute on #attributes=" do
+      user = User.new
+      user.attributes = {:name => 'John', :admin => true}
+      user.admin.should be_false
+      user.name.should == 'John'
+    end
+
+    it "should not ignore inaccessible attribute on #attributes= with no guard" do
+      user = User.new
+      user.send(:attributes=, {:name => 'John', :admin => true}, false)
+      user.admin.should be_true
+      user.name.should == 'John'
+    end
+
     it "should not ignore inaccessible attributes on #initialize from the database" do
       user = User.new(:name => 'John')
       user.admin = true
       user.save!
 
-      user = User.get(user.id)
-      user.admin.should be_true
-      user.name.should == 'John'
+      User.without_identity_map do
+        user = User.get(user.id)
+        user.admin.should be_true
+        user.name.should == 'John'
+      end
     end
 
     it "should ignore inaccessible attribute on #update_attributes" do

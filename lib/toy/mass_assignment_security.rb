@@ -4,12 +4,9 @@ module Toy
     include ActiveModel::MassAssignmentSecurity
 
     module InstanceMethods
-      def initialize(attrs={})
-        super(sanitize_for_mass_assignment(attrs || {}))
-      end
-
-      def update_attributes(attrs={})
-        super(sanitize_for_mass_assignment(attrs || {}))
+      def attributes=(attrs, guard_protected_attributes=true)
+        attrs = sanitize_for_mass_assignment(attrs || {}) if guard_protected_attributes
+        super(attrs)
       end
     end
   end

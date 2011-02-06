@@ -130,6 +130,13 @@ describe Toy::Attributes do
     it "does not fail with nil" do
       User.new(nil).should be_instance_of(User)
     end
+
+    it "does guard attributes=" do
+      attrs = {'age' => 21}
+      user = User.allocate
+      user.should_receive(:attributes=).with(attrs, true)
+      user.send(:initialize, attrs)
+    end
   end
 
   describe "#initialize_from_database" do
@@ -158,6 +165,12 @@ describe Toy::Attributes do
 
     it "returns self" do
       @user.initialize_from_database.should == @user
+    end
+
+    it "does not guard attributes=" do
+      attrs = {'age' => 21}
+      @user.should_receive(:attributes=).with(attrs, false)
+      @user.initialize_from_database(attrs)
     end
   end
 
