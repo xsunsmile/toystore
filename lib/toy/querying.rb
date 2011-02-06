@@ -49,9 +49,8 @@ module Toy
       alias :has_key? :key?
 
       def load(key, attrs)
-        return nil if attrs.nil?
-        attrs['id'] = key
-        allocate.initialize_from_database(attrs)
+        # return nil if attrs.nil?
+        attrs && allocate.initialize_from_database(attrs.update('id' => key))
       end
     end
   end
