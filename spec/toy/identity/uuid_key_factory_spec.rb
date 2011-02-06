@@ -16,6 +16,10 @@ describe Toy::Identity::UUIDKeyFactory do
       User.key(:uuid)
     end
 
+    it "returns String as .key_type" do
+      User.key_type.should be(String)
+    end
+
     it "sets id attribute to String type" do
       User.attributes['id'].type.should be(String)
     end

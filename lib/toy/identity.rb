@@ -26,6 +26,10 @@ module Toy
         @key_factory
       end
 
+      def key_type
+        @key_factory.key_type
+      end
+
       def next_key(object = nil)
         @key_factory.next_key(object).tap do |key|
           raise InvalidKey.new if key.nil?

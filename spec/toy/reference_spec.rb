@@ -37,12 +37,27 @@ describe Toy::Reference do
     Game.attributes.keys.should include('user_id')
   end
 
+  it "sets attribute type to .key_type" do
+    Game.attributes['user_id'].type.should be(String)
+  end
+
   it "adds reader method" do
     Game.new.should respond_to(:user)
   end
 
   it "adds writer method" do
     Game.new.should respond_to(:user=)
+  end
+
+  describe "with object_id key" do
+    before(:each) do
+      User.key(:object_id)
+      @reference = Game.reference(:user)
+    end
+
+    it "sets type to BSON::ObjectId" do
+      Game.attributes['user_id'].type.should be(BSON::ObjectId)
+    end
   end
 
   describe "#eql?" do

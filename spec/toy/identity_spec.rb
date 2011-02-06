@@ -45,6 +45,13 @@ describe Toy::Identity do
     end
   end
 
+  describe ".key_type" do
+    it "returns the type based on the key factory" do
+      User.key(Toy::Identity::UUIDKeyFactory.new)
+      User.key_type.should be(String)
+    end
+  end
+
   describe "initializing the id" do
     it "should pass use pass the new object" do
       Piece.attribute(:name, String)

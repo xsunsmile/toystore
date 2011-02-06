@@ -4,7 +4,7 @@ require 'toy/identity/object_id_key_factory'
 describe Toy::Identity::ObjectIdKeyFactory do
   uses_constants('User')
 
-  it "should use String as store_type" do
+  it "should use BSON::ObjectId as key_type" do
     Toy::Identity::ObjectIdKeyFactory.new.key_type.should be(BSON::ObjectId)
   end
 
@@ -17,6 +17,10 @@ describe Toy::Identity::ObjectIdKeyFactory do
     before(:each) do
       User.key(:object_id)
       User.attribute(:name, String)
+    end
+
+    it "returns BSON::ObjectId as .key_type" do
+      User.key_type.should be(BSON::ObjectId)
     end
 
     it "sets id attribute to BSON::ObjectId type" do

@@ -9,7 +9,7 @@ module Toy
       @type    = args.shift
 
       model.references[name] = self
-      model.attribute(key, String)
+      model.attribute(key, type.key_type)
       create_accessors
     end
 
