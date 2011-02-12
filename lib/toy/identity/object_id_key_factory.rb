@@ -20,7 +20,7 @@ class BSON::ObjectId
     BSON::ObjectId.from_string(value.to_s)
   end
 
-  def self.from_store(value, *)
-    value
+  def self.from_store(value, *args)
+    to_store(value, *args)
   end
 end
