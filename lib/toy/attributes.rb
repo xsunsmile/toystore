@@ -99,11 +99,11 @@ module Toy
 
       private
         def read_attribute(key)
-          @attributes[key]
+          @attributes[key.to_s]
         end
 
         def write_attribute(key, value)
-          @attributes[key] = attribute_definition(key).try(:from_store, value)
+          @attributes[key.to_s] = attribute_definition(key).try(:from_store, value)
         end
 
         def attribute_definition(key)
@@ -127,9 +127,9 @@ module Toy
         end
 
         def initialize_attributes_with_defaults
-          @attributes = {}.with_indifferent_access
+          @attributes = {}
           self.class.defaulted_attributes.each do |attribute|
-            @attributes[attribute.name] = attribute.default
+            @attributes[attribute.name.to_s] = attribute.default
           end
         end
     end

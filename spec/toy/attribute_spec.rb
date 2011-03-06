@@ -14,7 +14,7 @@ describe Toy::Attribute do
   end
 
   it "has name" do
-    attribute.name.should == :age
+    attribute.name.should == 'age'
   end
 
   it "has type" do
@@ -152,11 +152,11 @@ describe Toy::Attribute do
 
   describe "#abbr" do
     it "returns abbr if present" do
-      Toy::Attribute.new(User, :twitter_access_token, String, :abbr => :tat).abbr.should == :tat
+      Toy::Attribute.new(User, :twitter_access_token, String, :abbr => :tat).abbr.should == 'tat'
     end
 
     it "returns abbr as symbol if present as string" do
-      Toy::Attribute.new(User, :twitter_access_token, String, :abbr => 'tat').abbr.should == :tat
+      Toy::Attribute.new(User, :twitter_access_token, String, :abbr => 'tat').abbr.should == 'tat'
     end
 
     it "returns nil if not present" do

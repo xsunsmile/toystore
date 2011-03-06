@@ -5,11 +5,11 @@ module Toy
     def initialize(model, name, type, options={})
       options.assert_valid_keys(:default, :embedded_list, :virtual, :abbr)
 
-      @model, @name, @type, @options = model, name.to_sym, type, options
+      @model, @name, @type, @options = model, name.to_s, type, options
       @virtual = options.fetch(:virtual, false)
 
       if abbr?
-        options[:abbr] = abbr.to_sym
+        options[:abbr] = abbr.to_s
         model.alias_attribute(abbr, name)
       end
 
@@ -55,7 +55,7 @@ module Toy
     end
 
     def store_key
-      (abbr? ? abbr : name).to_s
+      abbr? ? abbr : name
     end
 
     # Stores reference to related embedded list

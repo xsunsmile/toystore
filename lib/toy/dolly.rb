@@ -5,7 +5,7 @@ module Toy
     def initialize_copy(other)
       @_new_record = true
       @_destroyed  = false
-      @attributes = {}.with_indifferent_access
+      @attributes = {}
 
       self.class.embedded_lists.each do |name, list|
         instance_variable_set(list.instance_variable, nil)
