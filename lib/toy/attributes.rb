@@ -65,7 +65,7 @@ module Toy
         {}.tap do |attrs|
           self.class.attributes.each do |name, attribute|
             next if attribute.virtual?
-            attrs[attribute.store_key] = attribute.to_store(read_attribute(attribute.name))
+            attrs[attribute.persisted_name] = attribute.to_store(read_attribute(attribute.name))
           end
         end.merge(embedded_attributes)
       end
