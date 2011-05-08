@@ -6,7 +6,7 @@ module Toy
       def get(id)
         key = store_key(id)
         value = store.read(key)
-        log_operation('GET', self, store, key, value)
+        log_operation(:get, self, store, key, value)
         load(key, value)
       end
 
@@ -29,7 +29,7 @@ module Toy
       def key?(id)
         key = store_key(id)
         value = store.key?(key)
-        log_operation('KEY', self, store, key, value)
+        log_operation(:key, self, store, key, value)
         value
       end
       alias :has_key? :key?

@@ -17,7 +17,7 @@ describe Toy::Logger do
     it "logs operation" do
       User.logger.should_receive(:debug).with('ToyStore GET User :memory "foo"')
       User.logger.should_receive(:debug).with('  "bar"')
-      User.log_operation('GET', User, adapter, 'foo', 'bar')
+      User.log_operation(:get, User, adapter, 'foo', 'bar')
     end
   end
 
@@ -27,7 +27,7 @@ describe Toy::Logger do
     it "logs operation" do
       User.logger.should_receive(:debug).with('ToyStore GET User :memory "foo"')
       User.logger.should_receive(:debug).with('  "bar"')
-      User.log_operation('GET', User, adapter, 'foo', 'bar')
+      User.log_operation(:get, User, adapter, 'foo', 'bar')
     end
   end
 end
