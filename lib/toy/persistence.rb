@@ -92,7 +92,9 @@ module Toy
       def delete
         key = store_key
         @_destroyed = true
-        logger.debug("ToyStore DEL #{self.class.name} #{key.inspect}")
+        if logger.debug?
+          logger.debug("ToyStore DEL #{self.class.name} #{key.inspect}")
+        end
         store.delete(key)
       end
 

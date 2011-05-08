@@ -49,7 +49,9 @@ module Toy
         return nil unless identity_map_on?
         key = store_key(id)
         if record = identity_map[key]
-          logger.debug("ToyStore IMG #{self.name} #{key.inspect}")
+          if logger.debug?
+            logger.debug("ToyStore IMG #{self.name} #{key.inspect}")
+          end
           record
         end
       end
@@ -83,14 +85,18 @@ module Toy
       return unless self.class.identity_map_on?
       key = store_key
       identity_map[key] = self
-      logger.debug("ToyStore IMS #{self.class.name} #{key.inspect}")
+      if logger.debug?
+        logger.debug("ToyStore IMS #{self.class.name} #{key.inspect}")
+      end
     end
 
     def remove_from_identity_map
       return unless self.class.identity_map_on?
       key = store_key
       identity_map.delete(key)
-      logger.debug("ToyStore IMD #{self.class.name} #{key.inspect}")
+      if logger.debug?
+        logger.debug("ToyStore IMD #{self.class.name} #{key.inspect}")
+      end
     end
 
     private

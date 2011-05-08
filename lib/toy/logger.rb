@@ -8,8 +8,10 @@ module Toy
       end
 
       def log_operation(operation, model, adapter, key, value)
-        logger.debug("ToyStore #{operation} #{model} :#{adapter.name} #{key.inspect}")
-        logger.debug("  #{value.inspect}")
+        if logger.debug?
+          logger.debug("ToyStore #{operation} #{model} :#{adapter.name} #{key.inspect}")
+          logger.debug("  #{value.inspect}")
+        end
       end
     end
 
