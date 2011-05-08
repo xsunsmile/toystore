@@ -4,10 +4,9 @@ module Toy
 
     module ClassMethods
       def get(id)
-        key = store_key(id)
-        value = store.read(key)
-        log_operation(:get, self, store, key, value)
-        load(key, value)
+        value = store.read(id)
+        log_operation(:get, self, store, id, value)
+        load(id, value)
       end
 
       def get!(id)
@@ -27,15 +26,14 @@ module Toy
       end
 
       def key?(id)
-        key = store_key(id)
-        value = store.key?(key)
-        log_operation(:key, self, store, key, value)
+        value = store.key?(id)
+        log_operation(:key, self, store, id, value)
         value
       end
       alias :has_key? :key?
 
-      def load(key, attrs)
-        attrs && allocate.initialize_from_database(attrs.update('id' => key))
+      def load(id, attrs)
+        attrs && allocate.initialize_from_database(attrs.update('id' => id))
       end
     end
   end

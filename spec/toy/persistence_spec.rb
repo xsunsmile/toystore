@@ -47,13 +47,6 @@ describe Toy::Persistence do
     end
   end
 
-  describe ".store_key" do
-    it "returns id" do
-      doc = User.new
-      User.store_key(doc.id).should == doc.id
-    end
-  end
-
   describe ".create" do
     before do
       User.attribute :name, String
@@ -63,7 +56,7 @@ describe Toy::Persistence do
     let(:doc) { @doc }
 
     it "creates key in database with attributes" do
-      User.store.read(doc.store_key).should == {
+      User.store.read(doc.id).should == {
         'name' => 'John',
         'age'  => 50,
       }
@@ -126,13 +119,6 @@ describe Toy::Persistence do
     end
   end
 
-  describe "#store_key" do
-    it "returns id" do
-      doc = User.new
-      doc.store_key.should == doc.id
-    end
-  end
-
   describe "#new_record?" do
     it "returns true if new" do
       User.new.should be_new_record
@@ -177,15 +163,15 @@ describe Toy::Persistence do
       end
 
       it "does not persist virtual attributes" do
-        @doc.store.read(@doc.store_key).should_not include('accepted_terms')
+        @doc.store.read(@doc.id).should_not include('accepted_terms')
       end
     end
 
     context "with existing record" do
       before do
         @doc      = User.create(:name => 'John', :age => 28)
-        @key      = @doc.store_key
-        @value    = User.store.read(@doc.store_key)
+        @key      = @doc.id
+        @value    = User.store.read(@doc.id)
         @doc.name = 'Bill'
         @doc.accepted_terms = false
         @doc.save
@@ -193,15 +179,15 @@ describe Toy::Persistence do
       let(:doc) { @doc }
 
       it "stores in same key" do
-        doc.store_key.should == @key
+        doc.id.should == @key
       end
 
       it "updates value in store" do
-        User.store.read(doc.store_key).should_not == @value
+        User.store.read(doc.id).should_not == @value
       end
 
       it "does not persist virtual attributes" do
-        @doc.store.read(@doc.store_key).should_not include('accepted_terms')
+        @doc.store.read(@doc.id).should_not include('accepted_terms')
       end
 
       it "updates the attributes in the instance" do

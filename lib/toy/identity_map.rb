@@ -47,17 +47,16 @@ module Toy
 
       def get_from_identity_map(id)
         return nil unless identity_map_on?
-        key = store_key(id)
-        if record = identity_map[key]
-          log_operation(:img, self.name, store, key)
+        if record = identity_map[id]
+          log_operation(:img, self.name, store, id)
           record
         end
       end
 
-      def load(key, attrs)
+      def load(id, attrs)
         return nil if attrs.nil?
 
-        if instance = identity_map[store_key(key)]
+        if instance = identity_map[id]
           instance
         else
           super.tap { |doc| doc.add_to_identity_map }
@@ -81,16 +80,14 @@ module Toy
 
     def add_to_identity_map
       return unless self.class.identity_map_on?
-      key = store_key
-      identity_map[key] = self
-      log_operation(:ims, self.class.name, store, key)
+      identity_map[id] = self
+      log_operation(:ims, self.class.name, store, id)
     end
 
     def remove_from_identity_map
       return unless self.class.identity_map_on?
-      key = store_key
-      identity_map.delete(key)
-      log_operation(:imd, self.class.name, store, key)
+      identity_map.delete(id)
+      log_operation(:imd, self.class.name, store, id)
     end
 
     private

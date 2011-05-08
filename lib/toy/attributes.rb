@@ -40,8 +40,8 @@ module Toy
       end
 
       def reload
-        if attrs = store.read(store_key)
-          attrs['id'] = store_key
+        if attrs = store.read(id)
+          attrs['id'] = id
           instance_variables.each        { |ivar| instance_variable_set(ivar, nil) }
           initialize_attributes_with_defaults
           send(:attributes=, attrs, new_record?)

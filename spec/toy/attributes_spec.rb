@@ -325,7 +325,7 @@ describe Toy::Attributes do
 
     it "persists to store using abbreviation" do
       user = User.create(:twitter_access_token => '1234')
-      raw = user.store.read(user.store_key)
+      raw = user.store.read(user.id)
       raw['tat'].should == '1234'
       raw.should_not have_key('twitter_access_token')
     end

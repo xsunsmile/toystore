@@ -14,10 +14,6 @@ module Toy
         !@store.nil?
       end
 
-      def store_key(id)
-        id
-      end
-
       def create(attrs={})
         new(attrs).tap { |doc| doc.save }
       end
@@ -43,10 +39,6 @@ module Toy
     module InstanceMethods
       def store
         self.class.store
-      end
-
-      def store_key
-        self.class.store_key(id)
       end
 
       def new_record?
@@ -75,10 +67,9 @@ module Toy
       end
 
       def delete
-        key = store_key
         @_destroyed = true
-        log_operation(:del, self.class.name, store, key)
-        store.delete(key)
+        log_operation(:del, self.class.name, store, id)
+        store.delete(id)
       end
 
       private
@@ -95,10 +86,10 @@ module Toy
         end
 
         def persist!
-          key, attrs = store_key, persisted_attributes
+          attrs = persisted_attributes
           attrs.delete('id') # no need to persist id as that is key
-          store.write(key, attrs)
-          log_operation(:set, self.class.name, store, key, attrs)
+          store.write(id, attrs)
+          log_operation(:set, self.class.name, store, id, attrs)
           persist
           each_embedded_object { |doc| doc.send(:persist) }
           true
