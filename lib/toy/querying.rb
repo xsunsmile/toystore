@@ -5,22 +5,8 @@ module Toy
     module ClassMethods
       def get(id)
         key = store_key(id)
-
-        if has_cache?
-          value = cache.read(key)
-          log_operation('RTG', self, cache, key, value)
-        end
-
-        if value.nil?
-          value = store.read(key)
-          log_operation('GET', self, store, key, value)
-
-          if has_cache?
-            cache.write(key, value)
-            log_operation('RTS', self, cache, key, value)
-          end
-        end
-
+        value = store.read(key)
+        log_operation('GET', self, store, key, value)
         load(key, value)
       end
 

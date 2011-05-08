@@ -38,7 +38,6 @@ module Toy
   def clear
     models.each do |model|
       model.store.clear         if model.has_store?
-      model.cache.clear         if model.has_cache?
       model.identity_map.clear  if model.identity_map_on?
     end
   end

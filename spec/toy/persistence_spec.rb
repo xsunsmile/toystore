@@ -36,44 +36,14 @@ describe Toy::Persistence do
     end
   end
 
-  describe ".cache" do
-    it "sets if arguments and reads if not" do
-      klass.cache(:memory, {})
-      klass.cache.should == Adapter[:memory].new({})
-    end
-
-    it "raises argument error if name provided but not client" do
-      lambda do
-        klass.cache(:memory)
-      end.should raise_error(ArgumentError, 'Client is required')
-    end
-
-    it "raises argument error if no name or client provided and has not been set" do
-      lambda do
-        klass.cache
-      end.should raise_error(StandardError, 'No cache has been set')
-    end
-  end
-
   describe ".has_store?" do
-    it "returns true if cache set" do
+    it "returns true if store set" do
       klass.store(:memory, {})
       klass.has_store?.should be_true
     end
 
-    it "returns false if cache not set" do
+    it "returns false if store not set" do
       klass.has_store?.should be_false
-    end
-  end
-
-  describe ".has_cache?" do
-    it "returns true if cache set" do
-      klass.cache(:memory, {})
-      klass.has_cache?.should be_true
-    end
-
-    it "returns false if cache not set" do
-      klass.has_cache?.should be_false
     end
   end
 
@@ -280,24 +250,6 @@ describe Toy::Persistence do
       doc = User.create
       doc.delete
       doc.should be_destroyed
-    end
-  end
-
-  describe "with cache store" do
-    before do
-      User.attribute(:name, String)
-      @cache  = User.cache(:memory, {})
-      @memory = User.store(:memory, {})
-      @user   = User.create(:name => 'John')
-    end
-
-    let(:cache)   { @cache }
-    let(:memory)  { @memory }
-    let(:user)    { @user }
-
-    it "writes to cache and store" do
-      cache[user.store_key].should  == {'name' => 'John'}
-      memory[user.store_key].should == {'name' => 'John'}
     end
   end
 end
