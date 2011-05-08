@@ -11,14 +11,16 @@ module Toy
     module ClassMethods
       def validates_embedded(*names)
         validates_each(*names) do |record, name, value|
-          invalid = value.compact.select { |o| !o.valid? }
+          invalid = value.compact.select { |obj| !obj.valid? }
           if invalid.any?
             record.errors.add(name, 'is invalid')
+
             if logger.debug?
-              logger.debug("ToyStore #{self.name} IEM")
-              invalid.each do |o|
-                logger.debug("  #{o.attributes.inspect} - #{o.errors.full_messages.inspect}")
+              invalid_messages = []
+              invalid.each do |obj|
+                invalid_messages << [obj.attributes, obj.errors.full_messages]
               end
+              log_operation(:iem, self.name, store, record.id, invalid_messages)
             end
           end
         end
