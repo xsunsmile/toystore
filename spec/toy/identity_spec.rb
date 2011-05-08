@@ -18,14 +18,11 @@ describe Toy::Identity do
     end
 
     it "should use Toy.key_factory by default" do
-      key_factory     = Toy::Identity::UUIDKeyFactory.new
+      key_factory     = Toy::Identity::ObjectIdKeyFactory.new
       Toy.key_factory = key_factory
-      klass           = Class.new { include Toy::Store }
-
-      key_factory.should_receive(:next_key).and_return('some_key')
-      klass.next_key
-
-      Toy.key_factory = nil
+      Class.new do
+        include Toy::Store
+      end.key_factory.should be_instance_of(Toy::Identity::ObjectIdKeyFactory)
     end
   end
 
