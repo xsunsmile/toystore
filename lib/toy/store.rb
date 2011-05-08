@@ -1,6 +1,7 @@
 module Toy
   module Store
     extend ActiveSupport::Concern
+    extend Plugins
 
     included do
       extend  ActiveModel::Naming
@@ -9,7 +10,6 @@ module Toy
       include Identity
       include Persistence
       include MassAssignmentSecurity
-      include Plugins
       include Dolly
       include Dirty
       include Equality
