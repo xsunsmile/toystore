@@ -99,6 +99,7 @@ module Toy
 
       private
         def read_attribute(key)
+          @attributes ||= {}
           @attributes[key.to_s]
         end
 
@@ -127,7 +128,7 @@ module Toy
         end
 
         def initialize_attributes_with_defaults
-          @attributes = {}
+          @attributes ||= {}
           self.class.defaulted_attributes.each do |attribute|
             @attributes[attribute.name.to_s] = attribute.default
           end
