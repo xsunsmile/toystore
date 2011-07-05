@@ -25,7 +25,14 @@ describe Toy::Logger do
     it "logs operation" do
       Toy.logger = stub(:debug? => true)
       User.logger.should_receive(:debug).with('TOYSTORE GET User :memory "foo"')
+      User.logger.should_receive(:debug).with('  "bar"')
       User.log_operation(:get, User, adapter, 'foo', 'bar')
+    end
+
+    it "ignores operations that should not be logged" do
+      Toy.logger = stub(:debug? => true)
+      User.logger.should_receive(:debug).with('TOYSTORE IMG User :memory "foo"')
+      User.log_operation(:img, User, adapter, 'foo', 'bar')
     end
   end
 
@@ -35,6 +42,7 @@ describe Toy::Logger do
     it "logs operation" do
       Toy.logger = stub(:debug? => true)
       User.logger.should_receive(:debug).with('TOYSTORE GET User :memory "foo"')
+      User.logger.should_receive(:debug).with('  "bar"')
       User.log_operation(:get, User, adapter, 'foo', 'bar')
     end
   end
