@@ -31,6 +31,4 @@ module Toy
       include Caching
     end
   end
-
-  extend Connection
 end

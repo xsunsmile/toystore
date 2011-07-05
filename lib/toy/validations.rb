@@ -15,7 +15,7 @@ module Toy
           if invalid.any?
             record.errors.add(name, 'is invalid')
 
-            if logger.debug?
+            if logger && logger.debug?
               invalid_messages = []
               invalid.each do |obj|
                 invalid_messages << [obj.attributes, obj.errors.full_messages]

@@ -42,13 +42,32 @@ module Toy
     end
   end
 
+  def logger
+    @logger
+  end
+
+  def logger?
+    @logger.present?
+  end
+
+  def logger=(logger)
+    @logger = logger
+  end
+
+  def key_factory=(key_factory)
+    @key_factory = key_factory
+  end
+
+  def key_factory
+    @key_factory ||= Toy::Identity::UUIDKeyFactory.new
+  end
+
   module Middleware
     autoload 'IdentityMap', 'toy/middleware/identity_map'
   end
 end
 
 require 'toy/exceptions'
-require 'toy/connection'
 require 'toy/attribute'
 require 'toy/attributes'
 require 'toy/callbacks'

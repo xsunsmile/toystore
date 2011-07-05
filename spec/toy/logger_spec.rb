@@ -3,6 +3,14 @@ require 'helper'
 describe Toy::Logger do
   uses_constants('User')
 
+  before do
+    @logger = Toy.logger
+  end
+
+  after do
+    Toy.logger = @logger
+  end
+
   it "should use Toy.logger for class" do
     User.logger.should == Toy.logger
   end
@@ -15,6 +23,7 @@ describe Toy::Logger do
     let(:adapter) { Adapter[:memory].new({}) }
 
     it "logs operation" do
+      Toy.logger = stub(:debug? => true)
       User.logger.should_receive(:debug).with('TOYSTORE GET User :memory "foo"')
       User.log_operation(:get, User, adapter, 'foo', 'bar')
     end
@@ -24,6 +33,7 @@ describe Toy::Logger do
     let(:adapter) { Adapter[:memory].new({}) }
 
     it "logs operation" do
+      Toy.logger = stub(:debug? => true)
       User.logger.should_receive(:debug).with('TOYSTORE GET User :memory "foo"')
       User.log_operation(:get, User, adapter, 'foo', 'bar')
     end

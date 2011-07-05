@@ -8,7 +8,7 @@ module Toy
       end
 
       def log_operation(operation, model, adapter, key, value=nil)
-        if logger.debug?
+        if logger && logger.debug?
           logger.debug("TOYSTORE #{operation.to_s.upcase} #{model} :#{adapter.name} #{key.inspect}")
         end
       end
