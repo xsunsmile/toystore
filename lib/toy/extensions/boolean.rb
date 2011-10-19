@@ -9,6 +9,8 @@ module Toy
         't'     => true, 
         'T'     => true, 
         '1'     => true, 
+        'on'    => true,
+        'ON'    => true,
         1       => true, 
         1.0     => true,
         false   => false, 
@@ -18,6 +20,8 @@ module Toy
         'f'     => false, 
         'F'     => false, 
         '0'     => false, 
+        'off'   => false,
+        'OFF'   => false,
         0       => false, 
         0.0     => false, 
         nil     => nil
@@ -32,7 +36,7 @@ module Toy
       end
 
       def from_store(value, *)
-        value.nil? ? nil : !!value
+        Mapping[value]
       end
     end
   end
