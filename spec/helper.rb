@@ -24,7 +24,7 @@ Logger.new(log_path.join('test.log')).tap do |log|
   Toy.logger = log
 end
 
-Rspec.configure do |c|
+RSpec.configure do |c|
   c.include(Support::Constants)
   c.include(IdentityMapMatcher)
 
