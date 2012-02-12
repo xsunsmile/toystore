@@ -4,10 +4,6 @@ An object mapper for any [adapter](https://github.com/jnunemaker/adapter) that c
 
 See examples/ for potential direction. The idea is that any key-value store (via adapters) that supports read, write, delete will work (memcache, membase, mongo, redis, couch, toyko. Potentially even RESTFUL services or sqlite with a single key-value table?)
 
-## Mailing List
-
-https://groups.google.com/forum/#!forum/toystoreadapter
-
 ## Identity Map
 
 By default, Toystore has identity map turned on. It assumes that any Toystore model has a unique id across all models. This means you either need to use the default uuid id's or create your own key factory that namespaces to model (see examples).
@@ -17,6 +13,10 @@ You also need to clear the map before each request. For this, there is a provide
     use(Toy::Middleware::IdentityMap)
 
 It is autoloaded, so just add it to your config.ru or sinatra/rails app as you would any other middleware and you are good to go.
+
+## Mailing List
+
+https://groups.google.com/forum/#!forum/toystoreadapter
 
 ## Note on Patches/Pull Requests
 
