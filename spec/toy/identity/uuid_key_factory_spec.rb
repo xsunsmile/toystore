@@ -3,11 +3,11 @@ require 'helper'
 describe Toy::Identity::UUIDKeyFactory do
   uses_constants('User')
 
-  it "should use String as store_type" do
+  it "should use String as key_type" do
     Toy::Identity::UUIDKeyFactory.new.key_type.should be(String)
   end
 
-  it "should use uuid for next key" do
+  it "should use uuid for next_key" do
     Toy::Identity::UUIDKeyFactory.new.next_key(nil).length.should == 36
   end
 

@@ -9,7 +9,7 @@ require 'adapter/memory'
 
 class Address
   include Toy::Store
-  store :memory, {}
+  adapter :memory, {}
 
   attribute :city,  String
   attribute :state, String
@@ -25,14 +25,14 @@ end
 
 class Company
   include Toy::Store
-  store :memory, {}
+  adapter :memory, {}
 
   attribute :name, String
 end
 
 class User
   include Toy::Store
-  store :memory, {}
+  adapter :memory, {}
 
   attribute :name,  String
   attribute :age,   Integer

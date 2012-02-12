@@ -10,7 +10,7 @@ require 'toystore'
 
 class User
   include Toy::Store
-  store :mongo, Mongo::Connection.new.db('adapter')['testing']
+  adapter :mongo, Mongo::Connection.new.db('adapter')['testing']
 
   attribute :name, String
 end

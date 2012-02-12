@@ -10,7 +10,7 @@ require 'toystore'
 
 class User
   include Toy::Store
-  store :memory, {}
+  adapter :memory, {}
 
   attribute :email, String
   attribute :crypted_password, String
@@ -36,6 +36,6 @@ user = User.create({
   :password_confirmation => 'testing',
 })
 
-pp Marshal.load(User.store.client[user.id])
+pp Marshal.load(User.adapter.client[user.id])
 # Virtual attributes are never persisted. In the data store, only email and crypted_password are stored.
 # {"crypted_password"=>"testing", "email"=>"nunemaker@gmail.com"}

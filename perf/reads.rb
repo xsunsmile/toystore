@@ -13,7 +13,7 @@ Toy.logger = ::Logger.new(STDOUT).tap { |log| log.level = ::Logger::INFO }
 class User
   include Toy::Store
   identity_map_off
-  store(:memory, {})
+  adapter(:memory, {})
   attribute :name, String
 end
 
@@ -22,19 +22,19 @@ id    = user.id
 times = 10_000
 
 client_result = Benchmark.realtime {
-  times.times { User.store.decode(User.store.client[User.store.key_for(id)]) }
+  times.times { User.adapter.decode(User.adapter.client[User.adapter.key_for(id)]) }
 }
 
-store_result = Benchmark.realtime {
+adapter_result = Benchmark.realtime {
   times.times { User.get(id) }
 }
 
 puts 'Client', client_result
-puts 'Toystore', store_result
-puts 'Ratio', store_result / client_result
+puts 'Toystore', adapter_result
+puts 'Ratio', adapter_result / client_result
 
 # PerfTools::CpuProfiler.start('prof_client') do
-#   times.times{ User.store.decode(User.store.client[User.store.key_for(id)]) }
+#   times.times{ User.adapter.decode(User.adapter.client[User.adapter.key_for(id)]) }
 # end
 
 # PerfTools::CpuProfiler.start('prof_reads') do

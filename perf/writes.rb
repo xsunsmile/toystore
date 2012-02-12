@@ -13,7 +13,7 @@ Toy.logger = ::Logger.new(STDOUT).tap { |log| log.level = ::Logger::INFO }
 class User
   include Toy::Store
   identity_map_off
-  store(:memory, {})
+  adapter(:memory, {})
 end
 
 times = 10_000
@@ -22,12 +22,12 @@ id = user.id
 attrs = user.persisted_attributes
 
 client_result = Benchmark.realtime {
-  times.times { User.store.write(id, attrs) }
+  times.times { User.adapter.write(id, attrs) }
 }
-store_result = Benchmark.realtime {
+adapter_result = Benchmark.realtime {
   times.times { User.create }
 }
 
 puts 'Client', client_result
-puts 'Toystore', store_result
-puts 'Ratio', store_result / client_result
+puts 'Toystore', adapter_result
+puts 'Ratio', adapter_result / client_result
