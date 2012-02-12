@@ -4,7 +4,6 @@ module Toy
 
     module ClassMethods
       def get(id)
-        log_operation(:get, self, adapter, id)
         load(id, adapter.read(id))
       end
 
@@ -25,7 +24,6 @@ module Toy
       end
 
       def key?(id)
-        log_operation(:key, self, adapter, id)
         adapter.key?(id)
       end
       alias :has_key? :key?

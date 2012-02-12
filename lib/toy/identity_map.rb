@@ -47,10 +47,7 @@ module Toy
 
       def get_from_identity_map(id)
         return nil unless identity_map_on?
-        if record = identity_map[id]
-          log_operation(:img, self.name, adapter, id)
-          record
-        end
+        identity_map[id]
       end
 
       def load(id, attrs)
@@ -81,13 +78,11 @@ module Toy
     def add_to_identity_map
       return unless self.class.identity_map_on?
       identity_map[id] = self
-      log_operation(:ims, self.class.name, adapter, id)
     end
 
     def remove_from_identity_map
       return unless self.class.identity_map_on?
       identity_map.delete(id)
-      log_operation(:imd, self.class.name, adapter, id)
     end
 
     private

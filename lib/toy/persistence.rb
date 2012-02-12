@@ -86,7 +86,6 @@ module Toy
 
     def delete
       @_destroyed = true
-      log_operation(:del, self.class.name, adapter, id)
       adapter.delete(id)
     end
 
@@ -108,7 +107,6 @@ module Toy
       attrs = persisted_attributes
       attrs.delete('id') # no need to persist id as that is key
       adapter.write(id, attrs)
-      log_operation(:set, self.class.name, adapter, id, attrs)
       persist
       each_embedded_object { |doc| doc.send(:persist) }
       true
