@@ -15,6 +15,7 @@ module Toy
       include Equality
       include Inspect
       include Querying
+      include Reloadable
 
       include Callbacks
       include Validations

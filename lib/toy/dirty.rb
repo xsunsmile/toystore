@@ -2,6 +2,7 @@ module Toy
   module Dirty
     extend ActiveSupport::Concern
     include ActiveModel::Dirty
+    include Reloadable
 
     def initialize(*)
       super
