@@ -2,7 +2,7 @@
 
 An object mapper for any [adapter](https://github.com/jnunemaker/adapter) that can read, write, delete, and clear data.
 
-See examples/ for potential direction. The idea is that any key-value store (via adapters) that supports read, write, delete will work (memcache, membase, mongo, redis, couch, toyko. Potentially even RESTFUL services or sqlite with a single key-value table?)
+See examples/ for potential direction.
 
 ## Identity Map
 
