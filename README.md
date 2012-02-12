@@ -2,7 +2,7 @@
 
 An object mapper for any [adapter](https://github.com/jnunemaker/adapter) that can read, write, delete, and clear data.
 
-See examples/ for potential direction.
+See [examples/](https://github.com/jnunemaker/toystore/tree/master/examples) for potential direction.
 
 ## Identity Map
 
