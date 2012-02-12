@@ -3,15 +3,27 @@ module Toy
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def store(name=nil, client=nil, options={})
+      def adapter(name=nil, client=nil, options={})
         assert_client(name, client)
-        @store = Adapter[name].new(client, options) if !name.nil? && !client.nil?
-        assert_store(name, client)
-        @store
+        if !name.nil? && !client.nil?
+          @adapter = Adapter[name].new(client, options)
+        end
+        assert_adapter(name, client)
+        @adapter
+      end
+
+      def store(*args)
+        warn '[DEPRECATED] store is deprecated in favor of adapter'
+        adapter(*args)
+      end
+
+      def has_adapter?
+        !@adapter.nil?
       end
 
       def has_store?
-        !@store.nil?
+        warn '[DEPRECATED] has_store? is deprecated in favor of has_adapter?'
+        has_adapter?
       end
 
       def create(attrs={})
@@ -31,14 +43,19 @@ module Toy
           raise(ArgumentError, 'Client is required') if !name.nil? && client.nil?
         end
 
-        def assert_store(name, client)
-          raise(StandardError, "No store has been set") if name.nil? && client.nil? && !has_store?
+        def assert_adapter(name, client)
+          raise(StandardError, "No adapter has been set") if name.nil? && client.nil? && !has_adapter?
         end
     end
 
     module InstanceMethods
+      def adapter
+        self.class.adapter
+      end
+
       def store
-        self.class.store
+        warn '[DEPRECATED] store is deprecated in favor of adapter'
+        self.class.adapter
       end
 
       def new_record?
@@ -68,8 +85,8 @@ module Toy
 
       def delete
         @_destroyed = true
-        log_operation(:del, self.class.name, store, id)
-        store.delete(id)
+        log_operation(:del, self.class.name, adapter, id)
+        adapter.delete(id)
       end
 
       private
@@ -88,8 +105,8 @@ module Toy
         def persist!
           attrs = persisted_attributes
           attrs.delete('id') # no need to persist id as that is key
-          store.write(id, attrs)
-          log_operation(:set, self.class.name, store, id, attrs)
+          adapter.write(id, attrs)
+          log_operation(:set, self.class.name, adapter, id, attrs)
           persist
           each_embedded_object { |doc| doc.send(:persist) }
           true

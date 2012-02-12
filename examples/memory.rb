@@ -10,7 +10,7 @@ require 'toystore'
 
 class User
   include Toy::Store
-  store :memory, {}
+  adapter :memory, {}
 
   attribute :name, String
 end

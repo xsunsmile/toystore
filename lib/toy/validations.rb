@@ -20,7 +20,7 @@ module Toy
               invalid.each do |obj|
                 invalid_messages << [obj.attributes, obj.errors.full_messages]
               end
-              log_operation(:iem, self.name, store, record.id, invalid_messages)
+              log_operation(:iem, self.name, adapter, record.id, invalid_messages)
             end
           end
         end

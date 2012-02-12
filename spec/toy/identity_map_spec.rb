@@ -60,7 +60,7 @@ describe Toy::IdentityMap do
     it "does not query if in map" do
       user = User.create
       user.should be_in_identity_map
-      user.store.should_not_receive(:read)
+      user.adapter.should_not_receive(:read)
       User.get(user.id).should equal(user)
     end
   end
@@ -69,7 +69,7 @@ describe Toy::IdentityMap do
     it "forces new query each time and skips the identity map" do
       user = User.create
       user.should be_in_identity_map
-      User.store.should_receive(:read).with(user.id).and_return({})
+      User.adapter.should_receive(:read).with(user.id).and_return({})
       user.reload
     end
   end
@@ -117,7 +117,7 @@ describe Toy::IdentityMap do
         user = User.create
         user.should be_in_identity_map
         User.identity_map_off
-        user.store.should_receive(:read).with(user.id).and_return(user.persisted_attributes)
+        user.adapter.should_receive(:read).with(user.id).and_return(user.persisted_attributes)
         User.get(user.id)
       end
     end

@@ -7,43 +7,43 @@ describe Toy::Persistence do
     Class.new { include Toy::Store }
   end
 
-  describe ".store" do
+  describe ".adapter" do
     it "sets if arguments and reads if not" do
-      User.store(:memory, {})
-      User.store.should == Adapter[:memory].new({})
+      User.adapter(:memory, {})
+      User.adapter.should == Adapter[:memory].new({})
     end
 
     it "defaults options to empty hash" do
       Adapter[:memory].should_receive(:new).with({}, {})
-      User.store(:memory, {})
+      User.adapter(:memory, {})
     end
 
     it "works with options" do
       Adapter[:memory].should_receive(:new).with({}, :something => true)
-      User.store(:memory, {}, :something => true)
+      User.adapter(:memory, {}, :something => true)
     end
 
     it "raises argument error if name provided but not client" do
       lambda do
-        klass.store(:memory)
+        klass.adapter(:memory)
       end.should raise_error(ArgumentError, 'Client is required')
     end
 
     it "raises argument error if no name or client provided and has not been set" do
       lambda do
-        klass.store
-      end.should raise_error(StandardError, 'No store has been set')
+        klass.adapter
+      end.should raise_error(StandardError, 'No adapter has been set')
     end
   end
 
-  describe ".has_store?" do
-    it "returns true if store set" do
-      klass.store(:memory, {})
-      klass.has_store?.should be_true
+  describe ".has_adapter?" do
+    it "returns true if adapter set" do
+      klass.adapter(:memory, {})
+      klass.has_adapter?.should be_true
     end
 
-    it "returns false if store not set" do
-      klass.has_store?.should be_false
+    it "returns false if adapter not set" do
+      klass.has_adapter?.should be_false
     end
   end
 
@@ -56,7 +56,7 @@ describe Toy::Persistence do
     let(:doc) { @doc }
 
     it "creates key in database with attributes" do
-      User.store.read(doc.id).should == {
+      User.adapter.read(doc.id).should == {
         'name' => 'John',
         'age'  => 50,
       }
@@ -113,9 +113,9 @@ describe Toy::Persistence do
     end
   end
 
-  describe "#store" do
+  describe "#adapter" do
     it "delegates to class" do
-      User.new.store.should equal(User.store)
+      User.new.adapter.should equal(User.adapter)
     end
   end
 
@@ -163,7 +163,7 @@ describe Toy::Persistence do
       end
 
       it "does not persist virtual attributes" do
-        @doc.store.read(@doc.id).should_not include('accepted_terms')
+        @doc.adapter.read(@doc.id).should_not include('accepted_terms')
       end
     end
 
@@ -171,23 +171,23 @@ describe Toy::Persistence do
       before do
         @doc      = User.create(:name => 'John', :age => 28)
         @key      = @doc.id
-        @value    = User.store.read(@doc.id)
+        @value    = User.adapter.read(@doc.id)
         @doc.name = 'Bill'
         @doc.accepted_terms = false
         @doc.save
       end
       let(:doc) { @doc }
 
-      it "stores in same key" do
+      it "does not change primary key" do
         doc.id.should == @key
       end
 
-      it "updates value in store" do
-        User.store.read(doc.id).should_not == @value
+      it "updates value in adapter" do
+        User.adapter.read(doc.id).should_not == @value
       end
 
       it "does not persist virtual attributes" do
-        @doc.store.read(@doc.id).should_not include('accepted_terms')
+        @doc.adapter.read(@doc.id).should_not include('accepted_terms')
       end
 
       it "updates the attributes in the instance" do
@@ -211,7 +211,7 @@ describe Toy::Persistence do
   end
 
   describe "#delete" do
-    it "should remove the instance from the store" do
+    it "should remove the instance" do
       doc = User.create
       doc.delete
       User.key?(doc.id).should be_false
@@ -219,7 +219,7 @@ describe Toy::Persistence do
   end
 
   describe "#destroy" do
-    it "should remove the instance from the store" do
+    it "should remove the instance" do
       doc = User.create
       doc.destroy
       User.key?(doc.id).should be_false

@@ -10,7 +10,7 @@ require 'toystore'
 
 class GameList
   include Toy::Store
-  store :memcached, Memcached.new
+  adapter :memcached, Memcached.new
 
   attribute :source, Hash
 end

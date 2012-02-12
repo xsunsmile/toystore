@@ -10,7 +10,7 @@ require 'toystore'
 
 class User
   include Toy::Store
-  store :redis, Redis.new
+  adapter :redis, Redis.new
 
   attribute :name, String
 end

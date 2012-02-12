@@ -29,7 +29,7 @@ module Toy
     models.clear
   end
 
-  # Clears all the stores for all the models. Useful in specs/tests/etc.
+  # Clears all the adapters for all the models. Useful in specs/tests/etc.
   # Do not use in production, harty harr harr.
   #
   # Note: that if your models are auto-loaded like in Rails, you will need
@@ -37,7 +37,7 @@ module Toy
   # not be aware of their existence.
   def clear
     models.each do |model|
-      model.store.clear         if model.has_store?
+      model.adapter.clear         if model.has_adapter?
       model.identity_map.clear  if model.identity_map_on?
     end
   end

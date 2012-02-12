@@ -10,7 +10,7 @@ require 'toystore'
 
 class GameList
   include Toy::Store
-  store :riak, Riak::Client.new['adapter_example']
+  adapter :riak, Riak::Client.new['adapter_example']
 
   attribute :source, Hash
 end
