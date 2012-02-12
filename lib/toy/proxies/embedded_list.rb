@@ -66,14 +66,15 @@ module Toy
       end
 
       private
-        def find_target
-          []
-        end
 
-        def assign_reference(instance)
-          instance.parent_reference = proxy_owner
-          instance
-        end
+      def find_target
+        []
+      end
+
+      def assign_reference(instance)
+        instance.parent_reference = proxy_owner
+        instance
+      end
     end
   end
 end

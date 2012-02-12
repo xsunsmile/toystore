@@ -42,14 +42,15 @@ module Toy
     alias :== :eql?
 
     private
-      def proxy_class
-        raise('Not Implemented')
-      end
 
-      def modularized_extensions(*extensions)
-        extensions.flatten.compact.map do |extension|
-          Proc === extension ? Module.new(&extension) : extension
-        end
+    def proxy_class
+      raise('Not Implemented')
+    end
+
+    def modularized_extensions(*extensions)
+      extensions.flatten.compact.map do |extension|
+        Proc === extension ? Module.new(&extension) : extension
       end
+    end
   end
 end

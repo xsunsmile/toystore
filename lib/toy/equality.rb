@@ -1,5 +1,7 @@
 module Toy
   module Equality
+    extend ActiveSupport::Concern
+
     def eql?(other)
       return true if self.class.eql?(other.class) && id == other.id
       return true if other.respond_to?(:target) &&

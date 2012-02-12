@@ -95,40 +95,42 @@ module Toy
       end
 
       private
-        def assert_type(record)
-          unless record.instance_of?(proxy_class)
-            raise(ArgumentError, "#{proxy_class} expected, but was #{record.class}")
-          end
-        end
 
-        def target_id
-          proxy_owner.send(proxy_key)
+      def assert_type(record)
+        unless record.instance_of?(proxy_class)
+          raise(ArgumentError, "#{proxy_class} expected, but was #{record.class}")
         end
+      end
 
-        def target_id=(value)
-          proxy_owner.send("#{proxy_key}=", value)
-        end
+      def target_id
+        proxy_owner.send(proxy_key)
+      end
 
-        def method_missing(method, *args, &block)
-          target.send(method, *args, &block)
-        end
+      def target_id=(value)
+        proxy_owner.send("#{proxy_key}=", value)
+      end
+
+      def method_missing(method, *args, &block)
+        target.send(method, *args, &block)
+      end
     end
 
     private
-      def create_accessors
-        model.class_eval """
-          def #{name}
-            #{instance_variable} ||= self.class.references[:#{name}].new_proxy(self)
-          end
 
-          def #{name}=(record)
-            #{name}.replace(record)
-          end
+    def create_accessors
+      model.class_eval """
+        def #{name}
+          #{instance_variable} ||= self.class.references[:#{name}].new_proxy(self)
+        end
 
-          def #{name}?
-            #{name}.present?
-          end
-        """
-      end
+        def #{name}=(record)
+          #{name}.replace(record)
+        end
+
+        def #{name}?
+          #{name}.present?
+        end
+      """
+    end
   end
 end

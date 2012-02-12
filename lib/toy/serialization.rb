@@ -48,35 +48,36 @@ module Toy
     end
 
     private
-      # Add associations specified via the <tt>:includes</tt> option.
-      # Expects a block that takes as arguments:
-      #   +association+ - name of the association
-      #   +records+     - the association record(s) to be serialized
-      #   +opts+        - options for the association records
-      def serializable_add_includes(options = {})
-        return unless include_associations = options.delete(:include)
 
-        base_only_or_except = { :except => options[:except],
-                                :only => options[:only] }
+    # Add associations specified via the <tt>:includes</tt> option.
+    # Expects a block that takes as arguments:
+    #   +association+ - name of the association
+    #   +records+     - the association record(s) to be serialized
+    #   +opts+        - options for the association records
+    def serializable_add_includes(options = {})
+      return unless include_associations = options.delete(:include)
 
-        include_has_options = include_associations.is_a?(Hash)
-        associations = include_has_options ? include_associations.keys : Array.wrap(include_associations)
+      base_only_or_except = { :except => options[:except],
+                              :only => options[:only] }
 
-        for association in associations
-          records = if self.class.list?(association)
-            send(association).to_a
-          elsif self.class.reference?(association) || self.class.parent_reference?(association)
-            send(association)
-          end
+      include_has_options = include_associations.is_a?(Hash)
+      associations = include_has_options ? include_associations.keys : Array.wrap(include_associations)
 
-          unless records.nil?
-            association_options = include_has_options ? include_associations[association] : base_only_or_except
-            opts = options.merge(association_options)
-            yield(association, records, opts)
-          end
+      for association in associations
+        records = if self.class.list?(association)
+          send(association).to_a
+        elsif self.class.reference?(association) || self.class.parent_reference?(association)
+          send(association)
         end
 
-        options[:include] = include_associations
+        unless records.nil?
+          association_options = include_has_options ? include_associations[association] : base_only_or_except
+          opts = options.merge(association_options)
+          yield(association, records, opts)
+        end
       end
+
+      options[:include] = include_associations
+    end
   end
 end

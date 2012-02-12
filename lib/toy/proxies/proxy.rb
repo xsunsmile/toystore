@@ -47,13 +47,14 @@ module Toy
       end
 
       private
-        def find_target
-          raise('Not Implemented')
-        end
 
-        def method_missing(method, *args, &block)
-          target.send(method, *args, &block)
-        end
+      def find_target
+        raise('Not Implemented')
+      end
+
+      def method_missing(method, *args, &block)
+        target.send(method, *args, &block)
+      end
     end
   end
 end

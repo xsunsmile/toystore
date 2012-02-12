@@ -70,28 +70,29 @@ module Toy
       end
 
       private
-        def find_target
-          return [] if target_ids.blank?
-          proxy_class.get_multi(target_ids)
-        end
 
-        def target_ids
-          proxy_owner.send(proxy_key)
-        end
+      def find_target
+        return [] if target_ids.blank?
+        proxy_class.get_multi(target_ids)
+      end
 
-        def target_ids=(value)
-          ids = value.map do |item|
-            if item.is_a?(proxy_class)
-              item.id
-            elsif item.is_a?(Hash)
-              item['id']
-            else
-              item
-            end
+      def target_ids
+        proxy_owner.send(proxy_key)
+      end
+
+      def target_ids=(value)
+        ids = value.map do |item|
+          if item.is_a?(proxy_class)
+            item.id
+          elsif item.is_a?(Hash)
+            item['id']
+          else
+            item
           end
-          proxy_owner.send(:"#{proxy_key}=", ids)
-          reset
         end
+        proxy_owner.send(:"#{proxy_key}=", ids)
+        reset
+      end
     end
   end
 end
