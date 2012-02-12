@@ -14,6 +14,13 @@ You also need to clear the map before each request. For this, there is a provide
 
 It is autoloaded, so just add it to your config.ru or sinatra/rails app as you would any other middleware and you are good to go.
 
+## ToyStore Power User Guides
+
+* [Wiki Home](https://github.com/jnunemaker/toystore/wiki)
+* [Identity](https://github.com/jnunemaker/toystore/wiki/Identity)
+* [Types](https://github.com/jnunemaker/toystore/wiki/Types)
+* [Exceptions](https://github.com/jnunemaker/toystore/wiki/Exceptions)
+
 ## Mailing List
 
 https://groups.google.com/forum/#!forum/toystoreadapter
