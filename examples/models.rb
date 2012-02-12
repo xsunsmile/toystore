@@ -14,8 +14,6 @@ class Address
   attribute :city,  String
   attribute :state, String
   attribute :zip,   String
-
-  index :zip
 end
 
 class PhoneNumber
@@ -41,8 +39,6 @@ class User
   attribute :admin, Boolean, :default => false
   attribute :ssn,   String
   timestamps
-
-  index :ssn
 
   list :addresses, :dependendent => true
   reference :employer, Company

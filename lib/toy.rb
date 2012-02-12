@@ -93,8 +93,6 @@ require 'toy/lists'
 require 'toy/reference'
 require 'toy/references'
 
-require 'toy/index'
-require 'toy/indices'
 require 'toy/identity/abstract_key_factory'
 require 'toy/identity/uuid_key_factory'
 require 'toy/identity'

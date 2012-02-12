@@ -24,7 +24,6 @@ module Toy
       include Lists
       include EmbeddedLists
       include References
-      include Indices
       include Logger
 
       include IdentityMap
