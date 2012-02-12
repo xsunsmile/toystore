@@ -2,28 +2,28 @@ module Toy
   module Extensions
     module Boolean
       Mapping = {
-        true    => true, 
-        'true'  => true, 
-        'TRUE'  => true, 
-        'True'  => true, 
-        't'     => true, 
-        'T'     => true, 
-        '1'     => true, 
+        true    => true,
+        'true'  => true,
+        'TRUE'  => true,
+        'True'  => true,
+        't'     => true,
+        'T'     => true,
+        '1'     => true,
         'on'    => true,
         'ON'    => true,
-        1       => true, 
+        1       => true,
         1.0     => true,
-        false   => false, 
-        'false' => false, 
-        'FALSE' => false, 
-        'False' => false, 
-        'f'     => false, 
-        'F'     => false, 
-        '0'     => false, 
+        false   => false,
+        'false' => false,
+        'FALSE' => false,
+        'False' => false,
+        'f'     => false,
+        'F'     => false,
+        '0'     => false,
         'off'   => false,
         'OFF'   => false,
-        0       => false, 
-        0.0     => false, 
+        0       => false,
+        0.0     => false,
         nil     => nil
       }
 
@@ -36,7 +36,7 @@ module Toy
       end
 
       def from_store(value, *)
-        Mapping[value]
+        to_store(value)
       end
     end
   end
