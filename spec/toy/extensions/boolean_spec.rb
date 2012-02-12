@@ -13,11 +13,13 @@ describe "Boolean.to_store" do
     Boolean.to_store('true').should be_true
     Boolean.to_store('t').should be_true
     Boolean.to_store('1').should be_true
+    Boolean.to_store('on').should be_true
     Boolean.to_store(1).should be_true
 
     Boolean.to_store('false').should be_false
     Boolean.to_store('f').should be_false
     Boolean.to_store('0').should be_false
+    Boolean.to_store('off').should be_false
     Boolean.to_store(0).should be_false
   end
 
