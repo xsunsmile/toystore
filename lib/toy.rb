@@ -9,11 +9,7 @@ require 'adapter'
 require 'simple_uuid'
 require 'active_model'
 require 'active_support/json'
-require 'active_support/core_ext/object'
-require 'active_support/core_ext/hash/keys'
-require 'active_support/core_ext/class/inheritable_attributes'
-require 'active_support/core_ext/string/conversions'
-require 'active_support/core_ext/string/inflections'
+require 'active_support/core_ext'
 
 extensions_path = root_path.join('lib', 'toy', 'extensions')
 Dir[extensions_path + '**/*.rb'].each { |file| require(file) }
