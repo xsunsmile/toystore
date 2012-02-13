@@ -43,9 +43,15 @@ module Toy
       self.class.adapter
     end
 
+    def initialize(attrs={})
+      @_new_record = true
+      super
+    end
+
     def initialize_from_database(attrs={})
       @_new_record = false
-      send(:initialize, attrs)
+      initialize_attributes_with_defaults
+      send("attributes=", attrs, false)
       self
     end
 

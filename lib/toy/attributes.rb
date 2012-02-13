@@ -27,9 +27,8 @@ module Toy
     end
 
     def initialize(attrs={})
-      @_new_record = true unless defined?(@_new_record)
       initialize_attributes_with_defaults
-      send(:attributes=, attrs, @_new_record)
+      self.attributes = attrs
       write_attribute :id, self.class.next_key(self) unless id?
     end
 

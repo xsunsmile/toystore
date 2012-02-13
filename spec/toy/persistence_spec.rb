@@ -166,12 +166,6 @@ describe Toy::Persistence do
     it "returns self" do
       @user.initialize_from_database.should == @user
     end
-
-    it "does not guard attributes=" do
-      attrs = {'age' => 21}
-      @user.should_receive(:attributes=).with(attrs, false)
-      @user.initialize_from_database(attrs)
-    end
   end
 
   describe "#new_record?" do
