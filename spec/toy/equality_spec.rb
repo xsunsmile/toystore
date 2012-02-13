@@ -24,7 +24,9 @@ describe Toy::Equality do
     end
 
     it "returns false if not same object" do
-
+      user = User.new
+      other_user = User.new
+      user.should_not equal(other_user)
     end
   end
 end
