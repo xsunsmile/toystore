@@ -1,7 +1,7 @@
 require 'helper'
 
 describe Toy::Dirty do
-  uses_constants('User')
+  uses_objects('User')
 
   before do
     User.attribute(:name, String)
