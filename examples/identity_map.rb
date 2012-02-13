@@ -16,7 +16,6 @@ require 'toystore'
 
 class User
   include Toy::Store
-  adapter :memory, {}
 
   # identity_map_off # if uncommented, User would not use identity map
 

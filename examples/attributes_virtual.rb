@@ -10,7 +10,6 @@ require 'toystore'
 
 class User
   include Toy::Store
-  adapter :memory, {}
 
   attribute :email, String
   attribute :crypted_password, String
