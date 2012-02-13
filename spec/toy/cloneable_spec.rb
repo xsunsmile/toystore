@@ -1,6 +1,6 @@
 require 'helper'
 
-describe Toy::Dolly do
+describe Toy::Cloneable do
   uses_constants('User', 'Game', 'Move')
 
   before do

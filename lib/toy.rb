@@ -68,7 +68,7 @@ module Toy
   autoload 'Caching',                 'toy/caching'
   autoload 'Callbacks',               'toy/callbacks'
   autoload 'Dirty',                   'toy/dirty'
-  autoload 'Dolly',                   'toy/dolly'
+  autoload 'Cloneable',               'toy/cloneable'
   autoload 'Equality',                'toy/equality'
   autoload 'Inspect',                 'toy/inspect'
   autoload 'Logger',                  'toy/logger'

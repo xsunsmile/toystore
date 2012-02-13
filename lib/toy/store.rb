@@ -10,7 +10,7 @@ module Toy
       include Identity
       include Persistence
       include MassAssignmentSecurity
-      include Dolly
+      include Cloneable
       include Dirty
       include Equality
       include Inspect

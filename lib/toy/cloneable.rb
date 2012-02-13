@@ -1,5 +1,5 @@
 module Toy
-  module Dolly
+  module Cloneable
     extend ActiveSupport::Concern
 
     def initialize_copy(other)
