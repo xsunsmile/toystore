@@ -87,7 +87,6 @@ module Toy
   autoload 'Lists',                   'toy/lists'
   autoload 'Reference',               'toy/reference'
   autoload 'References',              'toy/references'
-  autoload 'IdentityMap',             'toy/identity_map'
   autoload 'Identity', 'toy/identity'
 
   module Identity
@@ -96,6 +95,7 @@ module Toy
   end
 end
 
+require 'toy/identity_map'
 require 'toy/exceptions'
 require 'toy/plugins'
 require 'toy/store'
