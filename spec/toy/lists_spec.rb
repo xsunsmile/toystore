@@ -87,4 +87,24 @@ describe Toy::Lists do
       end
     end
   end
+
+  describe "#clone" do
+    before do
+      User.list(:games)
+
+      @game = Game.create
+      @user = User.create(:games  => [@game])
+    end
+
+    let(:game)  { @game }
+    let(:user)  { @user }
+
+    it "clones list id attributes" do
+      user.clone.game_ids.should_not equal(user.game_ids)
+    end
+
+    it "clones the list" do
+      user.clone.games.should_not equal(user.games)
+    end
+  end
 end

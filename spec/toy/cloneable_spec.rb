@@ -53,13 +53,5 @@ describe Toy::Cloneable do
         clone.id.should_not == user.id
       end
     end
-
-    it "clones list id attributes" do
-      user.clone.game_ids.should_not equal(user.game_ids)
-    end
-
-    it "clones the list" do
-      user.clone.games.should_not equal(user.games)
-    end
   end
 end
