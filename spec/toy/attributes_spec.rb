@@ -115,13 +115,6 @@ describe Toy::Attributes do
     it "does not fail with nil" do
       User.new(nil).should be_instance_of(User)
     end
-
-    it "does guard attributes=" do
-      attrs = {'age' => 21}
-      user = User.allocate
-      user.should_receive(:attributes=).with(attrs, true)
-      user.send(:initialize, attrs)
-    end
   end
 
   describe "#attributes" do
