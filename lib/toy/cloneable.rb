@@ -3,13 +3,13 @@ module Toy
     extend ActiveSupport::Concern
 
     def initialize_copy(other)
+      instance_variables.each do |name|
+        instance_variable_set(name, nil)
+      end
+
       @_new_record = true
       @_destroyed  = false
-      @attributes = {}
-
-      self.class.lists.each do |name, list|
-        instance_variable_set(list.instance_variable, nil)
-      end
+      @attributes  = {}
 
       other.attributes.except('id').each do |key, value|
         value = value.duplicable? ? value.clone : value

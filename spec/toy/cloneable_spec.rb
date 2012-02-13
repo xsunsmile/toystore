@@ -1,21 +1,17 @@
 require 'helper'
 
 describe Toy::Cloneable do
-  uses_constants('User', 'Game')
+  uses_constants('User')
 
   before do
     User.attribute(:name, String)
     User.attribute(:skills, Array)
-    User.list(:games)
 
-    @game = Game.create
     @user = User.create({
       :name   => 'John',
       :skills => ['looking awesome', 'growing beards'],
-      :games  => [@game],
     })
   end
-  let(:game)  { @game }
   let(:user)  { @user }
 
   describe "#clone" do
@@ -51,6 +47,13 @@ describe Toy::Cloneable do
       user.clone.tap do |clone|
         clone.id.should_not be_nil
         clone.id.should_not == user.id
+      end
+    end
+
+    it "nullifies defined instance variables" do
+      user.instance_variable_set("@foo", true)
+      user.clone.tap do |clone|
+        clone.instance_variable_get("@foo").should be_nil
       end
     end
   end
