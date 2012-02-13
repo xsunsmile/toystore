@@ -1,7 +1,7 @@
 require 'helper'
 
 describe Toy::Identity do
-  uses_constants('User', 'Piece')
+  uses_objects('User', 'Piece')
 
   describe "setting the key" do
     it "should set key factory to UUIDKeyFactory" do
