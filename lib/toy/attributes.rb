@@ -4,6 +4,7 @@ module Toy
     include ActiveModel::AttributeMethods
 
     included do
+      include Identity
       attribute_method_suffix('', '=', '?')
     end
 

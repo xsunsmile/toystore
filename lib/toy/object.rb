@@ -6,7 +6,6 @@ module Toy
       extend  ActiveModel::Naming
       include ActiveModel::Conversion
       include Attributes
-      include Identity
       include Cloneable
       include Dirty
       include Equality
