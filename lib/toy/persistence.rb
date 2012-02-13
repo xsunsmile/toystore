@@ -12,18 +12,8 @@ module Toy
         @adapter
       end
 
-      def store(*args)
-        warn '[DEPRECATED] store is deprecated in favor of adapter'
-        adapter(*args)
-      end
-
       def has_adapter?
         !@adapter.nil?
-      end
-
-      def has_store?
-        warn '[DEPRECATED] has_store? is deprecated in favor of has_adapter?'
-        has_adapter?
       end
 
       def create(attrs={})
@@ -49,13 +39,7 @@ module Toy
       end
     end
 
-
     def adapter
-      self.class.adapter
-    end
-
-    def store
-      warn '[DEPRECATED] store is deprecated in favor of adapter'
       self.class.adapter
     end
 
