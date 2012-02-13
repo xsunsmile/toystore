@@ -119,6 +119,42 @@ describe Toy::Persistence do
     end
   end
 
+
+  describe "#initialize_from_database" do
+    before do
+      User.attribute(:age, Integer, :default => 20)
+      @user = User.allocate
+    end
+
+    it "sets new record to false" do
+      @user.initialize_from_database
+      @user.should_not be_new_record
+    end
+
+    it "sets attributes" do
+      @user.initialize_from_database('age' => 21)
+    end
+
+    it "sets defaults" do
+      @user.initialize_from_database
+      @user.age.should == 20
+    end
+
+    it "does not fail with nil" do
+      @user.initialize_from_database(nil).should == @user
+    end
+
+    it "returns self" do
+      @user.initialize_from_database.should == @user
+    end
+
+    it "does not guard attributes=" do
+      attrs = {'age' => 21}
+      @user.should_receive(:attributes=).with(attrs, false)
+      @user.initialize_from_database(attrs)
+    end
+  end
+
   describe "#new_record?" do
     it "returns true if new" do
       User.new.should be_new_record

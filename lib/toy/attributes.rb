@@ -32,12 +32,6 @@ module Toy
       write_attribute :id, self.class.next_key(self) unless id?
     end
 
-    def initialize_from_database(attrs={})
-      @_new_record = false
-      send(:initialize, attrs)
-      self
-    end
-
     def id
       read_attribute(:id)
     end
