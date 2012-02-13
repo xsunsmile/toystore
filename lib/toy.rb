@@ -87,7 +87,7 @@ module Toy
   autoload 'Lists',                   'toy/lists'
   autoload 'Reference',               'toy/reference'
   autoload 'References',              'toy/references'
-  autoload 'Identity', 'toy/identity'
+  autoload 'Identity',                'toy/identity'
 
   module Identity
     autoload 'AbstractKeyFactory', 'toy/identity/abstract_key_factory'
