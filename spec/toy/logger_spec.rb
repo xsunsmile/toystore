@@ -1,7 +1,7 @@
 require 'helper'
 
 describe Toy::Logger do
-  uses_constants('User')
+  uses_objects('User')
 
   before do
     @logger = Toy.logger
