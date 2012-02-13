@@ -29,47 +29,9 @@ describe Toy::Dirty do
   end
 
   it "knows when attribute did not change" do
-    user = User.create(:name => 'Geoffrey')
-    user.name = 'Geoffrey'
+    user = User.new
+    user.name = nil
     user.should_not be_changed
-  end
-
-  describe "#save" do
-    before      { @user = User.create(:name => 'Geoffrey') }
-    let(:user)  { @user }
-
-    it "clears changes" do
-      user.name = 'John'
-      user.should be_changed
-      user.save
-      user.should_not be_changed
-    end
-
-    it "sets previous changes" do
-      user.previous_changes.should == {'name' => [nil, 'Geoffrey']}
-    end
-  end
-
-  it "does not have changes when loaded from database" do
-    user = User.create
-    loaded = User.get(user.id)
-    loaded.should_not be_changed
-  end
-
-  describe "#reload" do
-    before      { @user = User.create(:name => 'John') }
-    let(:user)  { @user }
-
-    it "clears changes" do
-      user.name = 'Steve'
-      user.reload
-      user.should_not be_changed
-    end
-
-    it "clears previously changed" do
-      user.reload
-      user.previous_changes.should be_empty
-    end
   end
 
   it "has attribute changed? method" do
@@ -80,19 +42,19 @@ describe Toy::Dirty do
   end
 
   it "has attribute was method" do
-    user = User.create(:name => 'John')
+    user = User.new(:name => 'John')
     user.name = 'Steve'
     user.name_was.should == 'John'
   end
 
   it "has attribute change method" do
-    user = User.create(:name => 'John')
+    user = User.new(:name => 'John')
     user.name = 'Steve'
     user.name_change.should == ['John', 'Steve']
   end
 
   it "has attribute will change! method" do
-    user = User.create
+    user = User.new
     user.name_will_change!
     user.should be_changed
   end

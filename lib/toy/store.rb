@@ -12,6 +12,7 @@ module Toy
       include MassAssignmentSecurity
       include Cloneable
       include Dirty
+      include DirtyStore
       include Equality
       include Inspect
       include Querying
