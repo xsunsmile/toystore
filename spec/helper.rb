@@ -14,7 +14,6 @@ require 'bundler'
 Bundler.require(:default, :development)
 
 require 'toy'
-require 'adapter/memory'
 require 'support/constants'
 require 'support/objects'
 require 'support/identity_map_matcher'

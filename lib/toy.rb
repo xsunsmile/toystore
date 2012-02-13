@@ -5,7 +5,7 @@ require 'digest/sha1'
 
 root_path = Pathname(__FILE__).dirname.join('..').expand_path
 
-require 'adapter'
+require 'adapter/memory'
 require 'simple_uuid'
 require 'active_model'
 require 'active_support/json'
@@ -33,8 +33,8 @@ module Toy
   # not be aware of their existence.
   def clear
     models.each do |model|
-      model.adapter.clear         if model.has_adapter?
-      model.identity_map.clear  if model.identity_map_on?
+      model.adapter.clear
+      model.identity_map.clear if model.identity_map_on?
     end
   end
 

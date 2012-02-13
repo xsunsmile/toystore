@@ -29,21 +29,9 @@ describe Toy::Persistence do
       end.should raise_error(ArgumentError, 'Client is required')
     end
 
-    it "raises argument error if no name or client provided and has not been set" do
-      lambda do
-        klass.adapter
-      end.should raise_error(StandardError, 'No adapter has been set')
-    end
-  end
-
-  describe ".has_adapter?" do
-    it "returns true if adapter set" do
-      klass.adapter(:memory, {})
-      klass.has_adapter?.should be_true
-    end
-
-    it "returns false if adapter not set" do
-      klass.has_adapter?.should be_false
+    it "defaults to memory adapter if no name or client provided and has not been set" do
+      klass.adapter.should_not be_nil
+      klass.adapter.client.should eql({})
     end
   end
 

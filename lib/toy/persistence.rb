@@ -5,15 +5,13 @@ module Toy
     module ClassMethods
       def adapter(name=nil, client=nil, options={})
         assert_client(name, client)
-        if !name.nil? && !client.nil?
-          @adapter = Adapter[name].new(client, options)
-        end
-        assert_adapter(name, client)
-        @adapter
-      end
 
-      def has_adapter?
-        !@adapter.nil?
+        if name.nil? && client.nil?
+          name = :memory
+          client = {}
+        end
+
+        @adapter ||= Adapter[name].new(client, options)
       end
 
       def create(attrs={})
@@ -32,10 +30,6 @@ module Toy
 
       def assert_client(name, client)
         raise(ArgumentError, 'Client is required') if !name.nil? && client.nil?
-      end
-
-      def assert_adapter(name, client)
-        raise(StandardError, "No adapter has been set") if name.nil? && client.nil? && !has_adapter?
       end
     end
 
