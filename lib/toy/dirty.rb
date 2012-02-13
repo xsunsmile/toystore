@@ -2,6 +2,8 @@ module Toy
   module Dirty
     extend ActiveSupport::Concern
     include ActiveModel::Dirty
+    include Attributes
+    include Cloneable
 
     def initialize(*)
       super
