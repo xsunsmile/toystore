@@ -1,7 +1,7 @@
 require 'helper'
 
 describe Toy::Attribute do
-  uses_constants('User')
+  uses_objects('User')
 
   before do
     @attribute = Toy::Attribute.new(User, :age, String)
