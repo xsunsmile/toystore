@@ -4,17 +4,10 @@ module Toy
     extend Plugins
 
     included do
-      extend  ActiveModel::Naming
-      include ActiveModel::Conversion
-      include Attributes
-      include Identity
+      include Toy::Object
       include Persistence
       include MassAssignmentSecurity
-      include Cloneable
-      include Dirty
       include DirtyStore
-      include Equality
-      include Inspect
       include Querying
       include Reloadable
 
@@ -25,7 +18,6 @@ module Toy
 
       include Lists
       include References
-      include Logger
 
       include IdentityMap
       include Caching

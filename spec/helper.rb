@@ -16,6 +16,7 @@ Bundler.require(:default, :development)
 require 'toy'
 require 'adapter/memory'
 require 'support/constants'
+require 'support/objects'
 require 'support/identity_map_matcher'
 require 'support/name_and_number_key_factory'
 
@@ -26,6 +27,7 @@ end
 
 RSpec.configure do |c|
   c.include(Support::Constants)
+  c.include(Support::Objects)
   c.include(IdentityMapMatcher)
 
   c.before(:each) do

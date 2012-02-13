@@ -97,4 +97,5 @@ end
 require 'toy/identity_map'
 require 'toy/exceptions'
 require 'toy/plugins'
+require 'toy/object'
 require 'toy/store'

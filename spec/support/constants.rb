@@ -1,8 +1,6 @@
 module Support
   module Constants
-    def self.included(base)
-      base.extend(ClassMethods)
-    end
+    extend ActiveSupport::Concern
 
     module ClassMethods
       def uses_constants(*constants)
