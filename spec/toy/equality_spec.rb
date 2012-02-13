@@ -19,7 +19,7 @@ describe Toy::Equality do
 
   describe "equal?" do
     it "returns true if same object" do
-      user = User.create(:id => 1)
+      user = User.new(:id => 1)
       user.should equal(user)
     end
 
