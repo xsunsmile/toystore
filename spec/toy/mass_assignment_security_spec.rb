@@ -31,6 +31,12 @@ describe Toy::MassAssignmentSecurity do
       user.name.should == 'John'
     end
 
+    it "should not ignore inaccessible attribute on #initialize_from_database" do
+      user = User.allocate.initialize_from_database(:name => 'John', :admin => true)
+      user.admin.should be_true
+      user.name.should == 'John'
+    end
+
     it "should ignore inaccessible attribute on #attributes=" do
       user = User.new
       user.attributes = {:name => 'John', :admin => true}
@@ -100,6 +106,12 @@ describe Toy::MassAssignmentSecurity do
     it "should ignore protected attribute on #initialize" do
       user = User.new(:name => 'John', :admin => true)
       user.admin.should be_false
+      user.name.should == 'John'
+    end
+
+    it "should not ignore protected attribute on #initialize_from_database" do
+      user = User.allocate.initialize_from_database(:name => 'John', :admin => true)
+      user.admin.should be_true
       user.name.should == 'John'
     end
 
