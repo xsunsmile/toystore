@@ -83,4 +83,24 @@ describe Toy::References do
       reference.options.should == {:some_option => true}
     end
   end
+
+  describe "#eql?" do
+    it "returns true if reference and target is same class and id" do
+      Game.reference(:user)
+      user = User.create
+      game = Game.create(:user => user)
+      user.should eql(game.user)
+    end
+  end
+
+  describe "#equal?" do
+    it "returns true if same object through proxy" do
+      Game.reference(:user)
+      user = User.create
+      game = Game.create(:user => user)
+
+      user.should equal(game.user)
+      game.user.should equal(user)
+    end
+  end
 end
