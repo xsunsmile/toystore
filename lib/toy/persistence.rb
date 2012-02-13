@@ -55,6 +55,12 @@ module Toy
       self
     end
 
+    def initialize_copy(other)
+      super
+      @_new_record = true
+      @_destroyed  = false
+    end
+
     def new_record?
       @_new_record == true
     end

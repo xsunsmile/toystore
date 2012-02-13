@@ -287,4 +287,18 @@ describe Toy::Persistence do
       doc.should be_destroyed
     end
   end
+
+  describe "#clone" do
+    it "returns instance that is a new_record" do
+      User.new.clone.should be_new_record
+      User.create.clone.should be_new_record
+    end
+
+    it "is never destroyed" do
+      user = User.create
+      user.clone.should_not be_destroyed
+      user.destroy
+      user.clone.should_not be_destroyed
+    end
+  end
 end

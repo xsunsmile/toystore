@@ -58,4 +58,10 @@ describe Toy::Dirty do
     user.name_will_change!
     user.should be_changed
   end
+
+  describe "#clone" do
+    it "has no changes" do
+      User.new.clone.should_not be_changed
+    end
+  end
 end

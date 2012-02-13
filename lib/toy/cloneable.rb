@@ -7,8 +7,6 @@ module Toy
         instance_variable_set(name, nil)
       end
 
-      @_new_record = true
-      @_destroyed  = false
       @attributes  = {}
 
       other.attributes.except('id').each do |key, value|

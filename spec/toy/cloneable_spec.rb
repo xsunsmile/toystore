@@ -1,13 +1,13 @@
 require 'helper'
 
 describe Toy::Cloneable do
-  uses_constants('User')
+  uses_objects('User')
 
   before do
     User.attribute(:name, String)
     User.attribute(:skills, Array)
 
-    @user = User.create({
+    @user = User.new({
       :name   => 'John',
       :skills => ['looking awesome', 'growing beards'],
     })
@@ -15,19 +15,6 @@ describe Toy::Cloneable do
   let(:user)  { @user }
 
   describe "#clone" do
-    it "returns new instance" do
-      user.clone.should be_new_record
-    end
-
-    it "has no changes" do
-      user.clone.should_not be_changed
-    end
-
-    it "is never destroyed" do
-      user.destroy
-      user.clone.should_not be_destroyed
-    end
-
     it "clones the @attributes hash" do
       user.clone.instance_variable_get("@attributes").should_not equal(user.instance_variable_get("@attributes"))
     end
