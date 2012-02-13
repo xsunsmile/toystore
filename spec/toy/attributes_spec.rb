@@ -267,20 +267,6 @@ describe Toy::Attributes do
       user.tat = '1234'
       user.twitter_access_token.should == '1234'
     end
-
-    it "persists to adapter using abbreviation" do
-      user = User.create(:twitter_access_token => '1234')
-      raw = user.adapter.read(user.id)
-      raw['tat'].should == '1234'
-      raw.should_not have_key('twitter_access_token')
-    end
-
-    it "loads from store correctly" do
-      user = User.create(:twitter_access_token => '1234')
-      user = User.get(user.id)
-      user.twitter_access_token.should == '1234'
-      user.tat.should == '1234'
-    end
   end
 
   describe "Initialization of array attributes" do
