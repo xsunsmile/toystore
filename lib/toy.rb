@@ -82,8 +82,6 @@ module Toy
   autoload 'Validations',             'toy/validations'
 
   autoload 'Collection',              'toy/collection'
-  autoload 'EmbeddedList',            'toy/embedded_list'
-  autoload 'EmbeddedLists',           'toy/embedded_lists'
   autoload 'List',                    'toy/list'
   autoload 'Lists',                   'toy/lists'
   autoload 'Reference',               'toy/reference'

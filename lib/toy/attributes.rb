@@ -52,14 +52,6 @@ module Toy
           next if attribute.virtual?
           attrs[attribute.persisted_name] = attribute.to_store(read_attribute(attribute.name))
         end
-      end.merge(embedded_attributes)
-    end
-
-    def embedded_attributes
-      {}.tap do |attrs|
-        self.class.embedded_lists.each_key do |name|
-          attrs[name.to_s] = send(name).map(&:persisted_attributes)
-        end
       end
     end
 

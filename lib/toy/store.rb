@@ -24,7 +24,6 @@ module Toy
       include Timestamps
 
       include Lists
-      include EmbeddedLists
       include References
       include Logger
 

@@ -92,7 +92,6 @@ module Toy
       attrs.delete('id') # no need to persist id as that is key
       adapter.write(id, attrs)
       persist
-      each_embedded_object { |doc| doc.send(:persist) }
       true
     end
   end

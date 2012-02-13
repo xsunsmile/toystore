@@ -1,12 +1,7 @@
 require 'helper'
 
 describe Toy::Reloadable do
-  uses_constants('User', 'Game', 'Move', 'Tile')
-
-  before do
-    Game.embedded_list(:moves)
-    Move.embedded_list(:tiles)
-  end
+  uses_constants('User', 'Game')
 
   describe "#reload" do
     before do

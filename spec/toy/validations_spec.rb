@@ -147,25 +147,4 @@ describe Toy::Validations do
       end
     end
   end
-
-  describe ".validates_embedded" do
-    before do
-      Game.embedded_list(:moves)
-      Move.attribute(:index, Integer)
-      Move.validates_presence_of(:index)
-      Game.validates_embedded(:moves)
-    end
-
-    it "adds errors if any of the embedded are invalid" do
-      game = Game.new(:moves => [Move.new])
-      game.valid?
-      game.errors[:moves].should include('is invalid')
-    end
-
-    it "does not have errors if all embedded are valid" do
-      game = Game.new(:moves => [Move.new(:index => 1)])
-      game.valid?
-      game.errors[:moves].should_not include('is invalid')
-    end
-  end
 end

@@ -1,12 +1,7 @@
 require 'helper'
 
 describe Toy::Attributes do
-  uses_constants('User', 'Game', 'Move', 'Tile')
-
-  before do
-    Game.embedded_list(:moves)
-    Move.embedded_list(:tiles)
-  end
+  uses_constants('User', 'Game')
 
   describe "including" do
     it "adds id attribute" do
@@ -22,7 +17,6 @@ describe Toy::Attributes do
 
   describe "#persisted_attributes" do
     before do
-      Game.embedded_list(:moves)
       @over    = Game.attribute(:over, Boolean)
       @score   = Game.attribute(:creator_score, Integer, :virtual => true)
       @abbr    = Game.attribute(:super_secret_hash, String, :abbr => :ssh)
@@ -32,7 +26,6 @@ describe Toy::Attributes do
         :creator_score => 20,
         :rewards       => %w(twigs berries).to_set,
         :ssh           => 'h4x',
-        :moves         => [Move.new, Move.new],
       })
     end
 
@@ -46,14 +39,6 @@ describe Toy::Attributes do
 
     it "does not include full names for abbreviated attributes" do
       @game.persisted_attributes.should_not have_key('super_secret_hash')
-    end
-
-    it "includes embedded" do
-      @game.persisted_attributes.should have_key('moves')
-    end
-
-    it "includes ids of embedded" do
-      @game.persisted_attributes['moves'][0].should have_key('id')
     end
 
     it "does not include virtual attributes" do
@@ -188,11 +173,6 @@ describe Toy::Attributes do
         'id'     => user.id,
         'active' => true,
       }
-    end
-
-    it "does not include embedded documents" do
-      game = Game.new(:moves => [Move.new(:tiles => [Tile.new])])
-      game.attributes.should_not have_key('moves')
     end
   end
 

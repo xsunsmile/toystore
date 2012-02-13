@@ -1,7 +1,7 @@
 require 'helper'
 
 describe Toy::Serialization do
-  uses_constants('User', 'Game', 'Move', 'Tile')
+  uses_constants('User', 'Game', 'Move')
 
   before do
     User.attribute :name, String
@@ -63,57 +63,6 @@ describe Toy::Serialization do
     user = User.new
     json = user.to_json(:except => 'id')
     ActiveSupport::JSON.decode(json)['user'].should_not have_key('id')
-  end
-
-  describe "serializing with embedded documents" do
-    before do
-      Game.reference(:creator, User)
-
-      Move.attribute(:index,  Integer)
-      Move.attribute(:points, Integer)
-      Move.attribute(:words,  Array)
-
-      Tile.attribute(:row,    Integer)
-      Tile.attribute(:column, Integer)
-      Tile.attribute(:index,  Integer)
-
-      Game.embedded_list(:moves)
-      Move.embedded_list(:tiles)
-
-      @user = User.create
-      @game = Game.create!(:creator => @user, :move_attributes => [
-        :index            => 0,
-        :points           => 15,
-        :tile_attributes => [
-          {:column => 7, :row => 7, :index => 23},
-          {:column => 8, :row => 7, :index => 24},
-        ],
-      ])
-    end
-
-    it "includes all embedded attributes by default" do
-      move = @game.moves.first
-      tile1 = move.tiles[0]
-      tile2 = move.tiles[1]
-      ActiveSupport::JSON.decode(@game.to_json).should == {
-        'game' => {
-          'id'         => @game.id,
-          'creator_id' => @user.id,
-          'moves'      => [
-            {
-              'id'     => move.id,
-              'index'  => 0,
-              'points' => 15,
-              'words'  => [],
-              'tiles'  => [
-                {'id' => tile1.id, 'column' => 7, 'row' => 7, 'index' => 23},
-                {'id' => tile2.id, 'column' => 8, 'row' => 7, 'index' => 24},
-              ]
-            },
-          ],
-        }
-      }
-    end
   end
 
   describe "serializing relationships" do
@@ -209,30 +158,6 @@ describe Toy::Serialization do
     end
   end
 
-  describe "serializing parent relationships" do
-    before do
-      Game.embedded_list :moves
-      Move.parent_reference :game
-    end
-
-    it "should include references" do
-      game = Game.create
-      move = game.moves.create
-
-      ActiveSupport::JSON.decode(move.to_json(:include => [:game])).should == {
-        'move' => {
-          'id' => move.id,
-          'game' => {
-            'id' => game.id,
-            'moves' => [{
-              'id' => move.id
-            }]
-          }
-        }
-      }
-    end
-  end
-
   describe "serializing specific attributes" do
     before do
       Move.attribute(:index,  Integer)
@@ -301,40 +226,6 @@ describe Toy::Serialization do
   end
 
   describe "#serializable_hash" do
-    context "with embedded list" do
-      before do
-        Game.embedded_list :moves
-        Move.parent_reference :game
-
-        @game = Game.create
-        @move = game.moves.create
-      end
-      let(:game) { @game }
-
-      it "returns a hash the whole way through" do
-        game.serializable_hash.should == {
-          'id' => game.id,
-          'moves' => [
-            {'id' => game.moves.first.id}
-          ]
-        }
-      end
-
-      it "allows using only with embedded" do
-        game.serializable_hash(:only => :moves).should == {
-          'moves' => [
-            {'id' => game.moves.first.id}
-          ]
-        }
-      end
-
-      it "allows using except to not include embedded" do
-        game.serializable_hash(:except => :moves).should == {
-          'id' => game.id,
-        }
-      end
-    end
-
     context "with method that is another toystore object" do
       before do
         Game.reference(:creator, User)

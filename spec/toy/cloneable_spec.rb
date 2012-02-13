@@ -1,23 +1,20 @@
 require 'helper'
 
 describe Toy::Cloneable do
-  uses_constants('User', 'Game', 'Move')
+  uses_constants('User', 'Game')
 
   before do
-    Game.embedded_list(:moves)
     User.attribute(:name, String)
     User.attribute(:skills, Array)
     User.list(:games)
 
-    @move = Move.new
-    @game = Game.create(:moves => [@move])
+    @game = Game.create
     @user = User.create({
       :name   => 'John',
       :skills => ['looking awesome', 'growing beards'],
       :games  => [@game],
     })
   end
-  let(:move)  { @move }
   let(:game)  { @game }
   let(:user)  { @user }
 
@@ -63,14 +60,6 @@ describe Toy::Cloneable do
 
     it "clones the list" do
       user.clone.games.should_not equal(user.games)
-    end
-
-    it "clones embedded list objects" do
-      game.clone.moves.first.should_not equal(game.moves.first)
-    end
-
-    it "regenerates ids for embedded list objects" do
-      game.clone.moves.first.id.should_not == game.moves.first.id
     end
   end
 end

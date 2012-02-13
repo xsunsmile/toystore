@@ -84,19 +84,5 @@ module Toy
       return unless self.class.identity_map_on?
       identity_map.delete(id)
     end
-
-    private
-
-    def has_embedded_objects?
-      self.class.embedded_lists.any?
-    end
-
-    def each_embedded_object(&block)
-      if has_embedded_objects?
-        self.class.embedded_lists.keys.inject([]) do |objects, name|
-          objects.concat(send(name).to_a.compact)
-        end.each { |object| block.call(object) }
-      end
-    end
   end
 end

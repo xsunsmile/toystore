@@ -1,13 +1,12 @@
 require 'helper'
 
 describe Toy do
-  uses_constants('User', 'Game', 'Move')
+  uses_constants('User', 'Game')
 
   describe ".clear" do
     it "can clear all the adapters in one magical moment" do
-      Game.embedded_list(:moves)
       user = User.create!
-      game = Game.create!(:moves => [Move.new])
+      game = Game.create!
       Toy.clear
       User.get(user.id).should be_nil
       Game.get(game.id).should be_nil

@@ -7,11 +7,6 @@ describe Toy::Lists do
     User.lists.should == {}
   end
 
-  it "does not share with embedded lists" do
-    Game.embedded_list(:moves)
-    Game.lists.should == {}
-  end
-
   describe ".list?" do
     before do
       User.list(:games)
