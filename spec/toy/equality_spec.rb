@@ -1,7 +1,7 @@
 require 'helper'
 
 describe Toy::Equality do
-  uses_constants('User', 'Game', 'Person')
+  uses_objects('User', 'Person')
 
   describe "#eql?" do
     it "returns true if same class and id" do
