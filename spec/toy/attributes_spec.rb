@@ -1,7 +1,7 @@
 require 'helper'
 
 describe Toy::Attributes do
-  uses_constants('User', 'Game')
+  uses_objects('User', 'Game')
 
   describe "including" do
     it "adds id attribute" do
