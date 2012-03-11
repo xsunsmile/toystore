@@ -316,7 +316,6 @@ describe Toy::Reference do
       it "delegates #equal?" do
         @game.user.should equal(@user)
         @user.should equal(@game.user)
-        @game.user.should equal(User.get(@user.id)) # identity map
         @game.user.should_not equal(User.create)
         @game.user.should_not equal(@game)
       end

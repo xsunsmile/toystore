@@ -6,10 +6,6 @@ module Toy
   module IdentityMap
     extend ActiveSupport::Concern
 
-    included do
-      identity_map_on
-    end
-
     module ClassMethods
       def identity_map
         Toy.identity_map

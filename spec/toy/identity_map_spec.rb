@@ -4,6 +4,8 @@ describe Toy::IdentityMap do
   uses_constants('User', 'Skill')
 
   before do
+    User.identity_map_on
+    Skill.identity_map_on
     Toy.identity_map.clear
   end
 
