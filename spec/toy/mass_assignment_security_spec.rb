@@ -56,11 +56,10 @@ describe Toy::MassAssignmentSecurity do
       user.admin = true
       user.save!
 
-      User.without_identity_map do
-        user = User.get(user.id)
-        user.admin.should be_true
-        user.name.should == 'John'
-      end
+      from_db = User.get(user.id)
+      from_db.should_not equal(user)
+      from_db.admin.should be_true
+      from_db.name.should == 'John'
     end
 
     it "should ignore inaccessible attribute on #update_attributes" do
