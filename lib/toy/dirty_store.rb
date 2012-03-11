@@ -6,13 +6,13 @@ module Toy
     include Persistence
     include Querying
 
-    def initialize(*)
+    def initialize_from_database(*)
       super
 
-      if persisted?
-        @previously_changed = {}
-        @changed_attributes.clear if @changed_attributes
-      end
+      @previously_changed = {}
+      @changed_attributes.clear if @changed_attributes
+
+      self
     end
 
     def reload
