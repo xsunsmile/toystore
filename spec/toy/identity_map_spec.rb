@@ -117,4 +117,42 @@ describe Toy::IdentityMap do
       end
     end
   end
+
+  describe ".without" do
+    before do
+      @user = User.create
+      Toy::IdentityMap.clear
+    end
+    let(:user) { @user }
+
+    it "skips the map" do
+      Toy::IdentityMap.without do
+        User.get(user.id).should_not equal(user.id)
+      end
+    end
+  end
+
+  describe ".use" do
+    before do
+      @user = User.create
+      Toy::IdentityMap.clear
+    end
+    let(:user) { @user }
+
+    it "uses the map" do
+      Toy::IdentityMap.enabled = false
+      Toy::IdentityMap.use do
+        User.get(user.id).should equal(User.get(user.id))
+      end
+    end
+
+    it "clears the map" do
+      Toy::IdentityMap.enabled = false
+      Toy::IdentityMap.repository['hello'] = 'world'
+      Toy::IdentityMap.use do
+        User.get(user.id)
+      end
+      Toy::IdentityMap.repository.should be_empty
+    end
+  end
 end

@@ -27,6 +27,23 @@ module Toy
       repository.keys.include?(object.id)
     end
 
+    def self.use
+      old, self.enabled = enabled, true
+
+      yield if block_given?
+    ensure
+      self.enabled = old
+      clear
+    end
+
+    def self.without
+      old, self.enabled = enabled, false
+
+      yield if block_given?
+    ensure
+      self.enabled = old
+    end
+
     module ClassMethods
       def get(id)
         get_from_identity_map(id) || super
