@@ -4,14 +4,19 @@ module Toy
 
     module ClassMethods
       def adapter(name=nil, client=nil, options={})
-        assert_client(name, client)
+        missing_client = !name.nil? && client.nil?
+        raise(ArgumentError, 'Client is required') if missing_client
 
-        if name.nil? && client.nil?
-          name = :memory
-          client = {}
+        needs_default_adapter = name.nil? && client.nil?
+        assigning_adapter     = !name.nil? && !client.nil?
+
+        if needs_default_adapter
+          @adapter ||= Adapter[:memory].new({}, options)
+        elsif assigning_adapter
+          @adapter = Adapter[name].new(client, options)
         end
 
-        @adapter ||= Adapter[name].new(client, options)
+        @adapter
       end
 
       def create(attrs={})
@@ -24,12 +29,6 @@ module Toy
 
       def destroy(*ids)
         ids.each { |id| get(id).try(:destroy) }
-      end
-
-      private
-
-      def assert_client(name, client)
-        raise(ArgumentError, 'Client is required') if !name.nil? && client.nil?
       end
     end
 

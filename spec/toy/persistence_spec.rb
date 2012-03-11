@@ -33,6 +33,13 @@ describe Toy::Persistence do
       klass.adapter.should_not be_nil
       klass.adapter.client.should eql({})
     end
+
+    it "allows changing adapter even after use of default" do
+      hash = {}
+      klass.adapter
+      klass.adapter :memory, hash
+      klass.adapter.client.should equal(hash)
+    end
   end
 
   describe ".create" do
