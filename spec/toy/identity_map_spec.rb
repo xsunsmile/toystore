@@ -4,19 +4,12 @@ describe Toy::IdentityMap do
   uses_constants('User', 'Skill')
 
   before do
-    User.identity_map_on
-    Skill.identity_map_on
-    Toy.identity_map.clear
+    Toy::IdentityMap.enabled = true
+    Toy::IdentityMap.clear
   end
 
-  describe ".identity_map" do
-    it "defaults to hash" do
-      User.identity_map.should == {}
-    end
-
-    it "memoizes" do
-      User.identity_map.should equal(User.identity_map)
-    end
+  after do
+    Toy::IdentityMap.enabled = false
   end
 
   it "adds to map on save" do
@@ -47,7 +40,7 @@ describe Toy::IdentityMap do
   describe ".get" do
     it "adds to map if not in map" do
       user = User.create
-      user.identity_map.clear
+      Toy::IdentityMap.clear
       user.should_not be_in_identity_map
       user = User.get(user.id)
       user.should be_in_identity_map
@@ -78,14 +71,14 @@ describe Toy::IdentityMap do
 
   describe "identity map off" do
     it "does not add to map on save" do
-      User.identity_map_off
+      Toy::IdentityMap.enabled = false
       user = User.new
       user.save!
       user.should_not be_in_identity_map
     end
 
     it "does not add to map on load" do
-      User.identity_map_off
+      Toy::IdentityMap.enabled = false
       user = User.load('1', 'name' => 'John')
       user.should_not be_in_identity_map
     end
@@ -93,7 +86,7 @@ describe Toy::IdentityMap do
     it "does not remove from map on delete" do
       user = User.create
       user.should be_in_identity_map
-      User.identity_map_off
+      Toy::IdentityMap.enabled = false
       user.delete
       user.should be_in_identity_map
     end
@@ -101,14 +94,14 @@ describe Toy::IdentityMap do
     it "does not remove from map on destroy" do
       user = User.create
       user.should be_in_identity_map
-      User.identity_map_off
+      Toy::IdentityMap.enabled = false
       user.destroy
       user.should be_in_identity_map
     end
 
     describe ".get" do
       it "does not add to map if not in map" do
-        User.identity_map_off
+        Toy::IdentityMap.enabled = false
         user = User.create
         user.should_not be_in_identity_map
         user = User.get(user.id)
@@ -118,34 +111,9 @@ describe Toy::IdentityMap do
       it "does not load from map if in map" do
         user = User.create
         user.should be_in_identity_map
-        User.identity_map_off
+        Toy::IdentityMap.enabled = false
         user.adapter.should_receive(:read).with(user.id).and_return(user.persisted_attributes)
         User.get(user.id)
-      end
-    end
-  end
-
-  describe ".without_identity_map" do
-    describe "with identity map off" do
-      it "turns identity map off, yields, and returns it to previous state" do
-        User.identity_map_off
-        User.should be_identity_map_off
-        User.without_identity_map do
-          user = User.create
-          user.should_not be_in_identity_map
-        end
-        User.should be_identity_map_off
-      end
-    end
-
-    describe "with identity map on" do
-      it "turns identity map off, yields, and returns it to previous state" do
-        User.should be_identity_map_on
-        User.without_identity_map do
-          user = User.create
-          user.should_not be_in_identity_map
-        end
-        User.should be_identity_map_on
       end
     end
   end

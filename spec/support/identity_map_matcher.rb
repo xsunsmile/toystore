@@ -1,16 +1,16 @@
 module IdentityMapMatcher
   class BeInIdentityMap
-    def matches?(obj)
-      @obj = obj
-      @obj.identity_map[@obj.id] == @obj
+    def matches?(object)
+      @object = object
+      Toy::IdentityMap.include?(@object)
     end
 
     def failure_message
-      "expected #{@obj} to be in identity map, but it was not"
+      "expected #{@object} to be in identity map, but it was not"
     end
 
     def negative_failure_message
-      "expected #{@obj} to not be in identity map, but it was"
+      "expected #{@object} to not be in identity map, but it was"
     end
   end
 

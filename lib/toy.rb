@@ -20,7 +20,7 @@ module Toy
   # Resets all tracking of things in memory. Useful for running
   # before each request in development mode with Rails and such.
   def reset
-    identity_map.clear
+    IdentityMap.clear
     plugins.clear
     models.clear
   end
@@ -34,8 +34,8 @@ module Toy
   def clear
     models.each do |model|
       model.adapter.clear
-      model.identity_map.clear if model.identity_map_on?
     end
+    IdentityMap.clear
   end
 
   def logger
@@ -99,3 +99,5 @@ require 'toy/exceptions'
 require 'toy/plugins'
 require 'toy/object'
 require 'toy/store'
+
+Toy::IdentityMap.enabled = false
