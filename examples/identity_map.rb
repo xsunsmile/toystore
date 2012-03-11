@@ -8,16 +8,15 @@ lib_path  = root_path.join('lib')
 $:.unshift(lib_path)
 require 'toystore'
 
-# Identity map is turned on by default for Toystore. To turn it off for an entire model, just call identity_map_off.
-#
 # More Reading...
 # http://martinfowler.com/eaaCatalog/identityMap.html
 # http://en.wikipedia.org/wiki/Identity_map
 
+# Identity map is turned off by default for Toystore so let's turn it on
+Toy::IdentityMap.enabled = true
+
 class User
   include Toy::Store
-
-  # identity_map_off # if uncommented, User would not use identity map
 
   attribute :name, String
 end
@@ -32,7 +31,7 @@ User.get(user.id)
 # User is retrieved from identity map instead of querying
 # ToyStore IMG User "08a1c54c-3393-11e0-8b37-89da41d2f675"
 
-User.without_identity_map do
+Toy::IdentityMap.without do
   User.get(user.id)
   # User is queried from database
   # ToyStore GET User :memory "08a1c54c-3393-11e0-8b37-89da41d2f675"
