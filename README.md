@@ -4,16 +4,6 @@ An object mapper for any [adapter](https://github.com/jnunemaker/adapter) that c
 
 See [examples/](https://github.com/jnunemaker/toystore/tree/master/examples) for potential direction.
 
-## Identity Map
-
-By default, Toystore has identity map turned on. It assumes that any Toystore model has a unique id across all models. This means you either need to use the default uuid id's or create your own key factory that namespaces to model (see examples).
-
-You also need to clear the map before each request. For this, there is a provided piece of middleware that you can use.
-
-    use(Toy::Middleware::IdentityMap)
-
-It is autoloaded, so just add it to your config.ru or sinatra/rails app as you would any other middleware and you are good to go.
-
 ## ToyStore Power User Guides
 
 * [Wiki Home](https://github.com/jnunemaker/toystore/wiki)
