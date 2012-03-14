@@ -20,13 +20,13 @@ user = User.new
 id = user.id
 attrs = user.persisted_attributes
 
-client_result = Benchmark.realtime {
+adapter_result = Benchmark.realtime {
   times.times { User.adapter.write(id, attrs) }
 }
-adapter_result = Benchmark.realtime {
+toystore_result = Benchmark.realtime {
   times.times { User.create }
 }
 
-puts 'Client', client_result
-puts 'Toystore', adapter_result
-puts 'Ratio', adapter_result / client_result
+puts 'Client', adapter_result
+puts 'Toystore', toystore_result
+puts 'Ratio', toystore_result / adapter_result
