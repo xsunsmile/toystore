@@ -12,7 +12,6 @@ Toy.logger = ::Logger.new(STDOUT).tap { |log| log.level = ::Logger::INFO }
 
 class User
   include Toy::Store
-  adapter(:memory, {})
 end
 
 times = 10_000

@@ -12,7 +12,6 @@ Toy.logger = ::Logger.new(STDOUT).tap { |log| log.level = ::Logger::INFO }
 
 class User
   include Toy::Store
-  adapter(:memory, {})
   attribute :name, String
 end
 
@@ -20,17 +19,17 @@ user  = User.create(:name => 'John')
 id    = user.id
 times = 10_000
 
-client_result = Benchmark.realtime {
+adapter_result = Benchmark.realtime {
   times.times { User.adapter.decode(User.adapter.client[User.adapter.key_for(id)]) }
 }
 
-adapter_result = Benchmark.realtime {
+toystore_result = Benchmark.realtime {
   times.times { User.get(id) }
 }
 
-puts 'Client', client_result
-puts 'Toystore', adapter_result
-puts 'Ratio', adapter_result / client_result
+puts 'Client', adapter_result
+puts 'Toystore', toystore_result
+puts 'Ratio', toystore_result / adapter_result
 
 # PerfTools::CpuProfiler.start('prof_client') do
 #   times.times{ User.adapter.decode(User.adapter.client[User.adapter.key_for(id)]) }
