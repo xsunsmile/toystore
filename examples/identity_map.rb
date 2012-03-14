@@ -14,6 +14,7 @@ require 'toystore'
 
 # Identity map is turned off by default for Toystore so let's turn it on
 Toy::IdentityMap.enabled = true
+puts 'Identity map enabled'
 
 class User
   include Toy::Store
@@ -27,17 +28,13 @@ user = User.create(:name => 'John')
 #   {"name"=>"John"}
 # ToyStore IMS User "08a1c54c-3393-11e0-8b37-89da41d2f675"
 
-User.get(user.id)
+puts "With identity map - User.get(user.id).equal?(user): #{User.get(user.id).equal?(user)}"
 # User is retrieved from identity map instead of querying
 # ToyStore IMG User "08a1c54c-3393-11e0-8b37-89da41d2f675"
 
 Toy::IdentityMap.without do
-  User.get(user.id)
+  puts "Without identity map - User.get(user.id).equal?(user): #{User.get(user.id).equal?(user)}"
   # User is queried from database
   # ToyStore GET User :memory "08a1c54c-3393-11e0-8b37-89da41d2f675"
   #   {"name"=>"John"}
 end
-
-User.get(user.id)
-# User is retrieved from identity map instead of querying
-# ToyStore IMG User "08a1c54c-3393-11e0-8b37-89da41d2f675"
