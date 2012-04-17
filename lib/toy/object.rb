@@ -12,5 +12,9 @@ module Toy
       include Inspect
       include Logger
     end
+
+    def persisted?
+      false
+    end
   end
 end
