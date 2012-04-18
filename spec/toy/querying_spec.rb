@@ -87,20 +87,81 @@ describe Toy::Querying do
     end
   end
 
-  describe ".load (with hash)" do
-    before    { @doc = User.load('1', :name => 'John') }
-    let(:doc) { @doc }
+  describe ".load" do
+    context "without type, hash attrs" do
+      before do
+        @doc = User.load('1', :name => 'John')
+      end
 
-    it "returns instance" do
-      doc.should be_instance_of(User)
+      it "returns instance" do
+        @doc.should be_instance_of(User)
+      end
+
+      it "marks object as persisted" do
+        @doc.should be_persisted
+      end
+
+      it "decodes the object" do
+        @doc.name.should == 'John'
+      end
     end
 
-    it "marks object as persisted" do
-      doc.should be_persisted
+    context "without type, nil attrs" do
+      before do
+        @doc = User.load('1', nil)
+      end
+
+      it "returns instance" do
+        @doc.should be_instance_of(User)
+      end
+
+      it "marks object as persisted" do
+        @doc.should be_persisted
+      end
+
+      it "decodes the object" do
+        @doc.name.should be_nil
+      end
     end
 
-    it "decodes the object" do
-      doc.name.should == 'John'
+    context "with symbol type" do
+      before do
+        create_constant('Admin', User)
+        @doc = User.load('1', :type => 'Admin', :name => 'John')
+      end
+
+      after do
+        remove_constant('Admin')
+      end
+
+      it "returns instance of type" do
+        @doc.should be_instance_of(Admin)
+      end
+    end
+
+    context "with string type" do
+      before do
+        create_constant('Admin', User)
+        @doc = User.load('1', 'type' => 'Admin', :name => 'John')
+      end
+
+      after do
+        remove_constant('Admin')
+      end
+
+      it "returns instance of type" do
+        @doc.should be_instance_of(Admin)
+      end
+    end
+
+    context "for type that doesn't exist" do
+      before do
+        @doc = User.load('1', 'type' => 'Admin', :name => 'John')
+      end
+
+      it "returns instance of loading class" do
+        @doc.should be_instance_of(User)
+      end
     end
   end
 end
