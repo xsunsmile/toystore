@@ -28,7 +28,11 @@ module Toy
 
     def default
       if options.key?(:default)
-        options[:default].respond_to?(:call) ? options[:default].call : options[:default]
+        if options[:default].respond_to?(:call)
+          options[:default].call(model)
+        else
+          options[:default]
+        end
       else
         type.respond_to?(:store_default) ? type.store_default : nil
       end

@@ -82,6 +82,12 @@ describe Toy::Attribute do
       attribute.default.should == 'foo'
     end
 
+    it "passes model to callable default" do
+      default = lambda { |model| model.name.downcase }
+      attribute = Toy::Attribute.new(User, :age, String, :default => default)
+      attribute.default.should == 'user'
+    end
+
     it "returns store_default if set for type" do
       Toy::Attribute.new(User, :skills, Array).default.should == []
     end
