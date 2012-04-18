@@ -4,7 +4,7 @@ describe "Array.to_store" do
   it "should convert value to_a" do
     Array.to_store([1, 2, 3, 4]).should == [1, 2, 3, 4]
     Array.to_store('1').should == ['1']
-    Array.to_store({'1' => '2', '3' => '4'}).should == [['1', '2'], ['3', '4']]
+    Array.to_store({'1' => '2'}).should == [['1', '2']]
   end
 end
 
