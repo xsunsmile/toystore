@@ -2,80 +2,75 @@ require 'helper'
 
 describe 'Toy Inheritance' do
   describe 'using Toy::Object' do
-    uses_objects('Parent')
-
-    attr_reader :inherited_class
-
     before do
-      Parent.attribute :name, String
+      class ::Parent
+        include Toy::Object
 
-      @inherited_class = Class.new(Parent) do
-        class << self
-          def name
-            'SomeInheritedClass'
-          end
-
-          def to_s
-            name
-          end
-        end
+        attribute :name, String
       end
+
+      class ::Child < Parent; end
+    end
+
+    after do
+      Object.send :remove_const, 'Parent' if defined?(::Parent)
+      Object.send :remove_const, 'Child'  if defined?(::Child)
     end
 
     it "duplicates attributes" do
       Parent.attributes.each do |name, attribute|
-        inherited_class.attributes.key?(name).should be_true
-        inherited_class.attributes[name].should eq(Parent.attributes[name])
+        Child.attributes.key?(name).should be_true
+        Child.attributes[name].should eq(Parent.attributes[name])
       end
     end
 
     it "does not add attributes to the parent" do
-      inherited_class.attribute(:foo, String)
+      Child.attribute(:foo, String)
       Parent.attributes.keys.should_not include(:foo)
     end
 
     it "adds type attribute" do
-      inherited_class.attribute?(:type).should be_true
+      Child.attribute?(:type).should be_true
     end
 
     it "sets type to class name" do
-      inherited_class.new.type.should eq('SomeInheritedClass')
+      Child.new.type.should eq('Child')
     end
 
     it "sets the key factory to same as parent" do
-      inherited_class.key_factory.should eq(Parent.key_factory)
+      Child.key_factory.should eq(Parent.key_factory)
     end
   end
 
   describe 'using Toy::Store' do
-    uses_constants('Parent', 'Degree')
-
-    attr_reader :inherited_class
-
     before do
-      Parent.attribute  :name,    String
-      Parent.list       :degrees, Degree
-      Parent.reference  :degree,  Degree
-
-      @inherited_class = Class.new(Parent) do
-        class << self
-          def name
-            'SomeInheritedClass'
-          end
-
-          def to_s
-            name
-          end
-        end
+      class ::Degree
+        include Toy::Store
       end
 
-      @inherited_class.list       :odd_degrees, Degree
-      @inherited_class.reference  :odd_degree,  Degree
+      class ::Parent
+        include Toy::Store
+
+        attribute  :name,    String
+        list       :degrees, Degree
+        reference  :degree,  Degree
+      end
+
+      class ::Child < Parent
+        list       :odd_degrees, Degree
+        reference  :odd_degree,  Degree
+      end
+    end
+
+    after do
+      Object.send :remove_const, 'Parent' if defined?(::Parent)
+      Object.send :remove_const, 'Child'  if defined?(::Child)
+      Object.send :remove_const, 'Degree' if defined?(::Degree)
     end
 
     it "duplicates lists" do
-      inherited_class.lists.keys.should include(:degrees)
-      inherited_class.lists.keys.should include(:odd_degrees)
+      Child.lists.keys.should include(:degrees)
+      Child.lists.keys.should include(:odd_degrees)
     end
 
     it "does not add lists to parent" do
@@ -83,8 +78,8 @@ describe 'Toy Inheritance' do
     end
 
     it "duplicates references" do
-      inherited_class.references.keys.should include(:degree)
-      inherited_class.references.keys.should include(:odd_degree)
+      Child.references.keys.should include(:degree)
+      Child.references.keys.should include(:odd_degree)
     end
 
     it "does not add references to parent" do
@@ -92,7 +87,7 @@ describe 'Toy Inheritance' do
     end
 
     it "sets the adapter to the same as the parent" do
-      inherited_class.adapter.should eq(Parent.adapter)
+      Child.adapter.should eq(Parent.adapter)
     end
   end
 end

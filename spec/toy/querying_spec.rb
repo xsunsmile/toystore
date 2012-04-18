@@ -1,10 +1,21 @@
 require 'helper'
 
 describe Toy::Querying do
-  uses_constants('User', 'Game')
-
   before do
-    User.attribute :name, String
+    class ::User
+      include Toy::Store
+
+      attribute :name, String
+    end
+
+    class ::Game
+      include Toy::Store
+    end
+  end
+
+  after do
+    Object.send :remove_const, 'User'  if defined?(::User)
+    Object.send :remove_const, 'Game'  if defined?(::Game)
   end
 
   describe ".get" do
@@ -88,6 +99,14 @@ describe Toy::Querying do
   end
 
   describe ".load" do
+    before do
+      class ::Admin < ::User; end
+    end
+
+    after do
+      Object.send :remove_const, 'Admin' if defined?(::Admin)
+    end
+
     context "without type, hash attrs" do
       before do
         @doc = User.load('1', :name => 'John')
@@ -126,12 +145,7 @@ describe Toy::Querying do
 
     context "with symbol type" do
       before do
-        create_constant('Admin', User)
         @doc = User.load('1', :type => 'Admin', :name => 'John')
-      end
-
-      after do
-        remove_constant('Admin')
       end
 
       it "returns instance of type" do
@@ -141,12 +155,7 @@ describe Toy::Querying do
 
     context "with string type" do
       before do
-        create_constant('Admin', User)
         @doc = User.load('1', 'type' => 'Admin', :name => 'John')
-      end
-
-      after do
-        remove_constant('Admin')
       end
 
       it "returns instance of type" do
@@ -156,6 +165,7 @@ describe Toy::Querying do
 
     context "for type that doesn't exist" do
       before do
+        Object.send :remove_const, 'Admin' if defined?(::Admin)
         @doc = User.load('1', 'type' => 'Admin', :name => 'John')
       end
 
