@@ -5,6 +5,7 @@ module Support
     module ClassMethods
       def uses_constants(*constants)
         before { create_constants(*constants) }
+        after  { remove_constants(*constants) }
       end
     end
 
