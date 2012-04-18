@@ -55,8 +55,6 @@ module Toy
       private :get_from_identity_map
 
       def load(id, attrs)
-        return nil if attrs.nil?
-
         if IdentityMap.enabled? && instance = IdentityMap.repository[id]
           instance
         else

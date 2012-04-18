@@ -4,7 +4,9 @@ module Toy
 
     module ClassMethods
       def get(id)
-        load(id, adapter.read(id))
+        if (attrs = adapter.read(id))
+          load(id, attrs)
+        end
       end
 
       def get!(id)
