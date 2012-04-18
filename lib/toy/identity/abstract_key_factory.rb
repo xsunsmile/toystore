@@ -8,6 +8,11 @@ module Toy
       def next_key(object)
         raise NotImplementedError, "#{self.class.name}#next_key isn't implemented."
       end
+
+      def eql?(other)
+        self.class == other.class && key_type == other.key_type
+      end
+      alias :== :eql?
     end
   end
 end
