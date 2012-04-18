@@ -31,9 +31,9 @@ describe Toy::Plugins do
     end
 
     it "adds plugins to classes declared after plugin was called" do
-      create_constant('Move')
-      Move.foo.should     == 'foo'
-      Move.new.bar.should == 'bar'
+      klass = Class.new { include Toy::Store }
+      klass.foo.should     == 'foo'
+      klass.new.bar.should == 'bar'
     end
   end
 end
