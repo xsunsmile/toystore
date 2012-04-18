@@ -72,6 +72,10 @@ describe Toy::Attribute do
       Toy::Attribute.new(User, :age, String, :default => 1).default.should == 1
     end
 
+    it "allows defaulting to nil" do
+      Toy::Attribute.new(User, :age, String, :default => nil).default.should be_nil
+    end
+
     it "returns store_default if set for type" do
       Toy::Attribute.new(User, :skills, Array).default.should == []
     end
