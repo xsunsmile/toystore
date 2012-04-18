@@ -76,6 +76,12 @@ describe Toy::Attribute do
       Toy::Attribute.new(User, :age, String, :default => nil).default.should be_nil
     end
 
+    it "works with callable default" do
+      default = lambda { 'foo' }
+      attribute = Toy::Attribute.new(User, :age, String, :default => default)
+      attribute.default.should == 'foo'
+    end
+
     it "returns store_default if set for type" do
       Toy::Attribute.new(User, :skills, Array).default.should == []
     end
