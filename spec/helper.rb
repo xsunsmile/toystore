@@ -11,7 +11,7 @@ log_path.mkpath
 require 'rubygems'
 require 'bundler'
 
-Bundler.require(:default, :development)
+Bundler.require(:default, :test)
 
 require 'toy'
 require 'support/constants'
@@ -20,7 +20,6 @@ require 'support/identity_map_matcher'
 require 'support/name_and_number_key_factory'
 
 Logger.new(log_path.join('test.log')).tap do |log|
-  LogBuddy.init(:logger => log)
   Toy.logger = log
 end
 

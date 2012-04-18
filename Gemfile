@@ -1,19 +1,19 @@
 source :rubygems
 gemspec
 
-group(:development) do
+gem 'rake'
+gem 'oj'
+
+group(:guard) do
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-bundler'
   gem 'growl'
+end
 
-  gem 'rake',       '~> 0.8.7'
-  gem 'rspec',      '~> 2.3'
-  gem 'timecop',    '~> 0.3.5'
-  gem 'tzinfo',     '~> 0.3.23'
-  gem 'log_buddy',  '~> 0.5.0'
-  gem 'rack-test'
-
-  gem 'bson'
-  gem 'bson_ext'
+group(:test) do
+  gem 'rspec',      '~> 2.8.0'
+  gem 'timecop',    '~> 0.3.0'
+  gem 'tzinfo',     '~> 0.3.0'
+  gem 'rack-test',  '~> 0.6.0'
 end
