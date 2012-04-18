@@ -58,6 +58,10 @@ describe Toy::IdentityMap do
       user.adapter.should_not_receive(:read)
       User.get(user.id).should equal(user)
     end
+
+    it "returns nil if not found in map or adapter" do
+      User.get(1).should be_nil
+    end
   end
 
   describe "#reload" do
