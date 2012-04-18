@@ -10,7 +10,7 @@ describe Toy::Serialization do
 
   it "serializes to json" do
     doc = User.new(:name => 'John', :age => 28)
-    ActiveSupport::JSON.decode(doc.to_json).should == {
+    MultiJson.load(doc.to_json).should == {
       'user' => {
         'name' => 'John',
         'id' => doc.id,
@@ -38,31 +38,31 @@ describe Toy::Serialization do
       end
     end
     json = User.new.to_json(:methods => [:foo])
-    ActiveSupport::JSON.decode(json)['user']['foo'].should == {'foo' => 'bar'}
+    MultiJson.load(json)['user']['foo'].should == {'foo' => 'bar'}
   end
 
   it "allows using :only" do
     user = User.new
     json = user.to_json(:only => :id)
-    ActiveSupport::JSON.decode(json).should == {'user' => {'id' => user.id}}
+    MultiJson.load(json).should == {'user' => {'id' => user.id}}
   end
 
   it "allows using :only with strings" do
     user = User.new
     json = user.to_json(:only => 'id')
-    ActiveSupport::JSON.decode(json).should == {'user' => {'id' => user.id}}
+    MultiJson.load(json).should == {'user' => {'id' => user.id}}
   end
 
   it "allows using :except" do
     user = User.new
     json = user.to_json(:except => :id)
-    ActiveSupport::JSON.decode(json)['user'].should_not have_key('id')
+    MultiJson.load(json)['user'].should_not have_key('id')
   end
 
   it "allows using :except with strings" do
     user = User.new
     json = user.to_json(:except => 'id')
-    ActiveSupport::JSON.decode(json)['user'].should_not have_key('id')
+    MultiJson.load(json)['user'].should_not have_key('id')
   end
 
   describe "serializing relationships" do
@@ -75,7 +75,7 @@ describe Toy::Serialization do
       user = User.create(:name => 'John', :age => 28)
       game = user.games.create
 
-      ActiveSupport::JSON.decode(game.to_json(:include => [:user])).should == {
+      MultiJson.load(game.to_json(:include => [:user])).should == {
         'game' => {
           'id'      => game.id,
           'user_id' => user.id,
@@ -92,7 +92,7 @@ describe Toy::Serialization do
     it "should include lists" do
       user = User.create(:name => 'John', :age => 28)
       game = user.games.create
-      ActiveSupport::JSON.decode(user.to_json(:include => [:games])).should == {
+      MultiJson.load(user.to_json(:include => [:games])).should == {
         'user' => {
           'name'     => 'John',
           'game_ids' => [game.id],
@@ -107,7 +107,7 @@ describe Toy::Serialization do
       user = User.create(:name => 'John', :age => 28)
       game = user.games.create
 
-      ActiveSupport::JSON.decode(ActiveSupport::JSON.encode(game.user)).should == {
+      MultiJson.load(ActiveSupport::JSON.encode(game.user)).should == {
         'user' => {
           'name'     => 'John',
           'game_ids' => [game.id],
@@ -121,7 +121,7 @@ describe Toy::Serialization do
       user = User.create(:name => 'John', :age => 28)
       game = user.games.create
 
-      ActiveSupport::JSON.decode(ActiveSupport::JSON.encode([game.user])).should == [
+      MultiJson.load(ActiveSupport::JSON.encode([game.user])).should == [
         'user' => {
           'name'     => 'John',
           'game_ids' => [game.id],
@@ -135,7 +135,7 @@ describe Toy::Serialization do
       user = User.create(:name => 'John', :age => 28)
       game = user.games.create
 
-      ActiveSupport::JSON.decode(ActiveSupport::JSON.encode(user.games)).should ==  [{
+      MultiJson.load(ActiveSupport::JSON.encode(user.games)).should ==  [{
         'game' => {
           'id'      => game.id,
           'user_id' => user.id
@@ -147,7 +147,7 @@ describe Toy::Serialization do
       user = User.create(:name => 'John', :age => 28)
       game = user.games.create
 
-      ActiveSupport::JSON.decode(ActiveSupport::JSON.encode({:games => user.games})).should ==  {
+      MultiJson.load(ActiveSupport::JSON.encode({:games => user.games})).should ==  {
         'games' => [{
           'game' => {
             'id'      => game.id,
@@ -191,7 +191,7 @@ describe Toy::Serialization do
       end
 
       move = Move.new(:index => 0, :points => 15, :words => ['QI', 'XI'])
-      ActiveSupport::JSON.decode(move.to_json).should == {
+      MultiJson.load(move.to_json).should == {
        'move' => {
          'id'     => move.id,
          'points' => 15,
@@ -213,7 +213,7 @@ describe Toy::Serialization do
       end
 
       move = Move.new(:index => 0, :points => 15, :words => ['QI', 'XI'])
-      ActiveSupport::JSON.decode(move.to_json).should == {
+      MultiJson.load(move.to_json).should == {
        'move' => {
          'id'                   => move.id,
          'index'                => 0,

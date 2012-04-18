@@ -3,6 +3,7 @@ gemspec
 
 gem 'rake'
 gem 'oj'
+gem 'multi_json'
 
 group(:guard) do
   gem 'guard'
