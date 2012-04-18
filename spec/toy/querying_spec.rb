@@ -1,21 +1,10 @@
 require 'helper'
 
 describe Toy::Querying do
+  uses_constants 'User', 'Game'
+
   before do
-    class ::User
-      include Toy::Store
-
-      attribute :name, String
-    end
-
-    class ::Game
-      include Toy::Store
-    end
-  end
-
-  after do
-    Object.send :remove_const, 'User'  if defined?(::User)
-    Object.send :remove_const, 'Game'  if defined?(::Game)
+    User.attribute :name, String
   end
 
   describe ".get" do
@@ -100,11 +89,11 @@ describe Toy::Querying do
 
   describe ".load" do
     before do
-      class ::Admin < ::User; end
+      class Admin < ::User; end
     end
 
     after do
-      Object.send :remove_const, 'Admin' if defined?(::Admin)
+      Object.send :remove_const, 'Admin' if defined?(Admin)
     end
 
     context "without type, hash attrs" do
