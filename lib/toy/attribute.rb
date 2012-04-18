@@ -28,10 +28,11 @@ module Toy
 
     def default
       if options.key?(:default)
-        if options[:default].respond_to?(:call)
-          options[:default].call(model)
+        default = options[:default]
+        if default.respond_to?(:call)
+          backwards_compatible_call(default)
         else
-          options[:default]
+          default
         end
       else
         type.respond_to?(:store_default) ? type.store_default : nil
@@ -68,5 +69,15 @@ module Toy
         name  == other.name
     end
     alias :== :eql?
+
+    private
+
+    def backwards_compatible_call(block)
+      if block.arity == 1
+        block.call(model)
+      else
+        block.call
+      end
+    end
   end
 end
