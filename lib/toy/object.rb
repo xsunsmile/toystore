@@ -11,6 +11,7 @@ module Toy
       include Equality
       include Inspect
       include Logger
+      include Inheritance
     end
 
     def persisted?

@@ -72,6 +72,7 @@ module Toy
   autoload 'Cloneable',               'toy/cloneable'
   autoload 'Equality',                'toy/equality'
   autoload 'Inspect',                 'toy/inspect'
+  autoload 'Inheritance',             'toy/inheritance'
   autoload 'Logger',                  'toy/logger'
   autoload 'MassAssignmentSecurity',  'toy/mass_assignment_security'
   autoload 'Persistence',             'toy/persistence'
