@@ -1,15 +1,15 @@
 source :rubygems
 gemspec
 
-gem 'rake'
-gem 'oj'
-gem 'multi_json'
+gem 'rake',       '~> 0.9.0'
+gem 'oj',         '~> 1.0.0'
+gem 'multi_json', '~> 1.3.2'
 
 group(:guard) do
-  gem 'guard'
-  gem 'guard-rspec'
-  gem 'guard-bundler'
-  gem 'growl'
+  gem 'guard',          '~> 1.0.0'
+  gem 'guard-rspec',    '~> 0.6.0'
+  gem 'guard-bundler',  '~> 0.1.0'
+  gem 'growl',          '~> 1.0.0'
 end
 
 group(:test) do
