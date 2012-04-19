@@ -1,4 +1,4 @@
-# Toystore [![Build Status](https://secure.travis-ci.org/jnunemaker/toystore.png?branch=master)][travis]
+# Toystore ![Build Status](https://secure.travis-ci.org/jnunemaker/toystore.png?branch=master)
 
 An object mapper for any [adapter](https://github.com/jnunemaker/adapter) that can read, write, delete, and clear data.
 
