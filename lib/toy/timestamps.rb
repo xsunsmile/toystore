@@ -1,6 +1,8 @@
 module Toy
   module Timestamps
     extend ActiveSupport::Concern
+    include Attributes
+    include Callbacks
 
     module ClassMethods
       def timestamps
