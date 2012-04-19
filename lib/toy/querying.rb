@@ -4,7 +4,9 @@ module Toy
 
     module ClassMethods
       def get(id)
-        load(id, adapter.read(id))
+        if (attrs = adapter.read(id))
+          load(id, attrs)
+        end
       end
 
       def get!(id)
@@ -29,8 +31,23 @@ module Toy
       alias :has_key? :key?
 
       def load(id, attrs)
-        attrs && allocate.initialize_from_database(attrs.update('id' => id))
+        attrs ||= {}
+        instance = constant_from_attrs(attrs).allocate
+        instance.initialize_from_database(attrs.update('id' => id))
       end
+
+      def constant_from_attrs(attrs)
+        return self if attrs.nil?
+
+        type = attrs[:type] || attrs['type']
+
+        return self if type.nil?
+
+        type.constantize
+      rescue NameError
+        self
+      end
+      private :constant_from_attrs
     end
   end
 end
