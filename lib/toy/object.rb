@@ -12,6 +12,7 @@ module Toy
       include Inspect
       include Logger
       include Inheritance
+      include Serialization
     end
 
     def persisted?

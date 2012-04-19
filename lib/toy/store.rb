@@ -13,11 +13,11 @@ module Toy
 
       include Callbacks
       include Validations
-      include Serialization
       include Timestamps
 
       include Lists
       include References
+      include AssociationSerialization
 
       include IdentityMap
       include Caching

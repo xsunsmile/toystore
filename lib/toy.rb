@@ -79,6 +79,7 @@ module Toy
   autoload 'Querying',                'toy/querying'
   autoload 'Reloadable',              'toy/reloadable'
   autoload 'Serialization',           'toy/serialization'
+  autoload 'AssociationSerialization','toy/association_serialization'
   autoload 'Timestamps',              'toy/timestamps'
   autoload 'Validations',             'toy/validations'
 
