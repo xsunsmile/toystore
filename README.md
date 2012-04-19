@@ -214,7 +214,7 @@ pp Person.get(person.id) # Phil with age 56
 
 If that doesn't excite you, nothing will. At this point, you are probably wishing for more.
 
-Luckily, there are more [examples](https://github.com/jnunemaker/toystore/tree/master/examples) and I created a few power user guides, which I will kindly link next.
+Luckily, there is an entire directory full of [examples](https://github.com/jnunemaker/toystore/tree/master/examples) and I created a few power user guides, which I will kindly link next.
 
 ## ToyStore Power User Guides
 
