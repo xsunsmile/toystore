@@ -20,34 +20,34 @@ class Person
 end
 
 # Pretty class inspecting
-puts Person.inspect
+pp Person
 
-john = Person.new(:name => 'John', :age => 30)
+john  = Person.new(:name => 'John',  :age => 30)
 steve = Person.new(:name => 'Steve', :age => 31)
 
 # Pretty inspecting
-puts john.inspect
+pp john
 
 # Attribute dirty tracking
 john.name = 'NEW NAME!'
-puts john.changes.inspect       # {"name"=>["John", "NEW NAME!"], "age"=>[nil, 30]}
-puts john.name_changed?.inspect # true
+pp john.changes       # {"name"=>["John", "NEW NAME!"], "age"=>[nil, 30]}
+pp john.name_changed? # true
 
 # Equality goodies
-puts john.eql?(john)  # true
-puts john.eql?(steve) # false
-puts john == john     # true
-puts john == steve    # false
+pp john.eql?(john)  # true
+pp john.eql?(steve) # false
+pp john == john     # true
+pp john == steve    # false
 
 # Cloning
-puts john.clone.inspect
+pp john.clone
 
 # Inheritance
 class AwesomePerson < Person
 end
 
-puts Person.attributes.keys.sort.inspect          # ["age", "id", "name"]
-puts AwesomePerson.attributes.keys.sort.inspect   # ["age", "id", "name", "type"]
+pp Person.attributes.keys.sort          # ["age", "id", "name"]
+pp AwesomePerson.attributes.keys.sort   # ["age", "id", "name", "type"]
 
 # Serialization
 puts john.to_json
