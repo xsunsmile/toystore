@@ -17,7 +17,7 @@ describe Toy::Equality do
     end
   end
 
-  describe "equal?" do
+  describe "#equal?" do
     it "returns true if same object" do
       user = User.new(:id => 1)
       user.should equal(user)
@@ -27,6 +27,13 @@ describe Toy::Equality do
       user = User.new
       other_user = User.new
       user.should_not equal(other_user)
+    end
+  end
+
+  describe "#hash" do
+    it "returns the hash of the id" do
+      user = User.new
+      user.hash.should eq(user.id.hash)
     end
   end
 end

@@ -17,5 +17,9 @@ module Toy
       end
       super other
     end
+
+    def hash
+      id.hash
+    end
   end
 end
