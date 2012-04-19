@@ -226,7 +226,7 @@ describe Toy::Reference do
 
     it "unmemoizes the list" do
       @game.user.should == @user
-      @game.user.reset
+      @game.reset_user
       User.should_receive(:get).and_return(@user)
       @game.user.should == @user
     end
@@ -238,87 +238,97 @@ describe Toy::Reference do
     end
   end
 
-  context "delegating" do
-    describe "when target is nil" do
-      before do
-        @game = Game.create
-      end
-
-      it "returns nil if nil" do
-        @game.user.inspect.should == 'nil'
-      end
-
-      it "delegates #kind_of?" do
-        @game.user.kind_of?(NilClass).should be_true
-        @game.user.kind_of?(User).should be_false
-      end
-
-      it "delegates #instance_of?" do
-        @game.user.instance_of?(NilClass).should be_true
-        @game.user.instance_of?(User).should be_false
-      end
-
-      it "delegates #is_a?" do
-        @game.user.is_a?(NilClass).should be_true
-        @game.user.is_a?(User).should be_false
-      end
-
-      it "delegates #eql?" do
-        @game.user.should eql(nil)
-        @game.user.should_not eql(User.create)
-        @game.user.should_not eql(@game)
-      end
-
-      it "delegates #equal?" do
-        @game.user.should equal(nil)
-        @game.user.should_not equal(User.create)
-        @game.user.should_not equal(@game)
-      end
+  context "when target is nil" do
+    before do
+      @game = Game.create
     end
 
-    describe "when target is not nil" do
-      before do
-        @user = User.create
-        @game = Game.create(:user => @user)
-      end
+    it "returns nil if nil" do
+      @game.user.inspect.should == 'nil'
+    end
 
-      it "delegates #inspect" do
-        @game.user = @user
-        @game.user.inspect.should == %Q(#<User:#{@user.object_id} id: "#{@user.id}">)
-      end
+    it "returns true for nil?" do
+      @game.user.nil?.should be_true
+    end
 
-      it "delegates #==" do
-        (@game.user == @user).should be_true
-        (@user == @game.user).should be_true
-      end
+    it "does not evaluate to true if used in conditional" do
+      lambda { raise if @game.user }.should_not raise_error
+    end
 
-      it "delegates #is_a?" do
-        @game.user.is_a?(User).should be_true
-        @game.user.is_a?(Game).should be_false
-      end
+    it "returns true when prefaced with !" do
+      (!@game.user).should == true
+    end
 
-      it "delegates #kind_of?" do
-        @game.user.kind_of?(User).should be_true
-        @game.user.kind_of?(Game).should be_false
-      end
+    it "delegates #kind_of?" do
+      @game.user.kind_of?(NilClass).should be_true
+      @game.user.kind_of?(User).should be_false
+    end
 
-      it "delegates #instance_of?" do
-        @game.user.instance_of?(User).should be_true
-        @game.user.instance_of?(Game).should be_false
-      end
+    it "delegates #instance_of?" do
+      @game.user.instance_of?(NilClass).should be_true
+      @game.user.instance_of?(User).should be_false
+    end
 
-      it "delegates #eql?" do
-        @game.user.should eql(@user)
-        @game.user.should_not eql(User.create)
-        @game.user.should_not eql(@game)
-      end
+    it "delegates #is_a?" do
+      @game.user.is_a?(NilClass).should be_true
+      @game.user.is_a?(User).should be_false
+    end
 
-      it "delegates #equal?" do
-        @game.user.should equal(@user)
-        @user.should equal(@game.user)
-        @game.user.should_not equal(User.create)
-        @game.user.should_not equal(@game)
-      end
+    it "delegates #eql?" do
+      @game.user.should eql(nil)
+      @game.user.should_not eql(User.create)
+      @game.user.should_not eql(@game)
+    end
+
+    it "delegates #equal?" do
+      @game.user.should equal(nil)
+      @game.user.should_not equal(User.create)
+      @game.user.should_not equal(@game)
+    end
+  end
+
+  context "when target is not nil" do
+    before do
+      @user = User.create
+      @game = Game.create(:user => @user)
+    end
+
+    it "delegates #inspect" do
+      @game.user = @user
+      @game.user.inspect.should == %Q(#<User:#{@user.object_id} id: "#{@user.id}">)
+    end
+
+    it "delegates #==" do
+      (@game.user == @user).should be_true
+      (@user == @game.user).should be_true
+    end
+
+    it "delegates #is_a?" do
+      @game.user.is_a?(User).should be_true
+      @game.user.is_a?(Game).should be_false
+    end
+
+    it "delegates #kind_of?" do
+      @game.user.kind_of?(User).should be_true
+      @game.user.kind_of?(Game).should be_false
+    end
+
+    it "delegates #instance_of?" do
+      @game.user.instance_of?(User).should be_true
+      @game.user.instance_of?(Game).should be_false
+    end
+
+    it "delegates #eql?" do
+      @game.user.should eql(@user)
+      @game.user.should_not eql(User.create)
+      @game.user.should_not eql(@game)
+    end
+
+    it "delegates #equal?" do
+      @game.user.should equal(@user)
+      @user.should equal(@game.user)
+      @game.user.should_not equal(User.create)
+      @game.user.should_not equal(@game)
     end
   end
 
@@ -339,7 +349,7 @@ describe Toy::Reference do
   describe "reference#create" do
     before do
       @game = Game.create
-      @user = @game.user.create
+      @user = @game.create_user
     end
 
     it_should_behave_like 'reference#create'
@@ -349,7 +359,7 @@ describe Toy::Reference do
     before do
       User.attribute(:name, String)
       @game = Game.create
-      @user = @game.user.create(:name => 'John')
+      @user = @game.create_user(:name => 'John')
     end
 
     it_should_behave_like 'reference#create'
@@ -374,14 +384,14 @@ describe Toy::Reference do
 
     it "does not save owner" do
       @game.should_not_receive(:save)
-      @game.user.build
+      @game.build_user
     end
   end
 
   describe "reference#build" do
     before do
       @game = Game.create
-      @user = @game.user.build
+      @user = @game.build_user
     end
 
     it_should_behave_like 'reference#build'
@@ -391,7 +401,7 @@ describe Toy::Reference do
     before do
       User.attribute(:name, String)
       @game = Game.create
-      @user = @game.user.build(:name => 'John')
+      @user = @game.build_user(:name => 'John')
     end
 
     it_should_behave_like 'reference#build'
