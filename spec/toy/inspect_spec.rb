@@ -17,7 +17,7 @@ describe Toy::Attributes do
   describe "#inspect" do
     it "prints out object id and attributes sorted with values" do
       user = User.new(:age => 28, :name => 'John')
-      user.inspect.should == %Q(#<User:#{user.object_id} age: 28, id: "#{user.id}", name: "John">)
+      user.inspect.should == %Q(#<User:#{user.object_id} id: "#{user.id}", age: 28, name: "John">)
     end
   end
 end

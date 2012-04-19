@@ -14,10 +14,12 @@ module Toy
     end
 
     def inspect
-      attributes_as_nice_string = self.class.attributes.keys.map(&:to_s).sort.map do |name|
+      keys = self.class.attributes.keys - ['id']
+      attributes_as_nice_string = keys.map(&:to_s).sort.map do |name|
         "#{name}: #{read_attribute(name).inspect}"
-      end.join(", ")
-      "#<#{self.class}:#{object_id} #{attributes_as_nice_string}>"
+      end
+      attributes_as_nice_string.unshift("id: #{read_attribute(:id).inspect}")
+      "#<#{self.class}:#{object_id} #{attributes_as_nice_string.join(', ')}>"
     end
   end
 end
