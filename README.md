@@ -226,11 +226,16 @@ Luckily, there is an entire directory full of [examples](https://github.com/jnun
 
 As of 0.8.3, I started keeping a [changelog](https://github.com/jnunemaker/toystore/blob/master/Changelog.md). All significant updates will be summarized there.
 
+## Compatibility
+
+* Rails 3, Sinatra, etc. No Rails 2 (because it uses Active Model).
+* Ruby 1.8.7, 1.9.2, 1.9.3 (specs are run against each before releases)
+
 ## Mailing List
 
 https://groups.google.com/forum/#!forum/toystoreadapter
 
-## Note on Patches/Pull Requests
+## Contributing
 
 * Fork the project.
 * Make your feature addition or bug fix in a topic branch.
