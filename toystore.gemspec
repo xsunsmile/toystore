@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Geoffrey Dagley', 'John Nunemaker']
   s.email       = ['gdagley@gmail.com', 'nunemaker@gmail.com']
-  s.homepage    = 'http://github.com/newtoy/toystore'
+  s.homepage    = 'http://jnunemaker.github.com/toystore/'
   s.summary     = 'An object mapper for anything that can read, write and delete data'
   s.description = 'An object mapper for anything that can read, write and delete data'
 
