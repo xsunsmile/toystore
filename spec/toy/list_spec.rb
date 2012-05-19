@@ -63,26 +63,6 @@ describe Toy::List do
     end
   end
 
-  describe "dependent" do
-    before do
-      User.list :games, :dependent => true
-      @game = Game.create
-      @user = User.create(:game_ids => [@game.id])
-    end
-
-    it "should create a method to destroy games" do
-      User.new.should respond_to(:destroy_games)
-    end
-
-    it "should remove the games" do
-      user_id = @user.id
-      game_id = @game.id
-      @user.destroy
-      User.get(user_id).should be_nil
-      Game.get(game_id).should be_nil
-    end
-  end
-
   describe "setting list type" do
     before do
       @list = User.list(:active_games, Game)
@@ -495,6 +475,26 @@ describe Toy::List do
     it "extends block methods onto proxy" do
       @user.moves.respond_to?(:old).should be_true
       @user.moves.old.should == [@move_old]
+    end
+  end
+
+  describe "list with :dependent option" do
+    before do
+      User.list :games, :dependent => true
+      @game = Game.create
+      @user = User.create(:game_ids => [@game.id])
+    end
+
+    it "should create a method to destroy games" do
+      User.new.should respond_to(:destroy_games)
+    end
+
+    it "should remove the games" do
+      user_id = @user.id
+      game_id = @game.id
+      @user.destroy
+      User.get(user_id).should be_nil
+      Game.get(game_id).should be_nil
     end
   end
 
