@@ -1,5 +1,8 @@
 I will do my best to keep this up to date with significant changes here, starting in 0.8.3.
 
+* 0.10.1
+  * [Allow changing list attribute type](https://github.com/jnunemaker/toystore/commit/a5b1a944622509c32688d2e56088a7d7aa6fc0b3)
+
 * 0.10.0
   * [Reference proxy api changes](https://github.com/jnunemaker/toystore/pull/5) thanks to jakehow
   * [Support for inheritance](https://github.com/jnunemaker/toystore/pull/4)
