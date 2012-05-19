@@ -219,6 +219,24 @@ describe Toy::Persistence do
       it "returns true" do
         @doc.save.should be_true
       end
+
+      context "with #persist overridden" do
+        before do
+          @doc.class_eval do
+            def persist
+            end
+          end
+        end
+
+        it "is persisted" do
+          @doc.save
+          @doc.persisted?.should be_true
+        end
+
+        it "returns true" do
+          @doc.save.should be_true
+        end
+      end
     end
 
     context "with existing record" do
@@ -258,6 +276,24 @@ describe Toy::Persistence do
 
       it "returns true" do
         @doc.save.should be_true
+      end
+
+      context "with #persist overridden" do
+        before do
+          @doc.class_eval do
+            def persist
+            end
+          end
+        end
+
+        it "is persisted" do
+          @doc.save
+          doc.persisted?.should be_true
+        end
+
+        it "returns true" do
+          @doc.save.should be_true
+        end
       end
     end
   end

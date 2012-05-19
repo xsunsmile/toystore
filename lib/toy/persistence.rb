@@ -87,23 +87,18 @@ module Toy
     private
 
     def create
-      persist!
+      persist
+      @_new_record = false
+      true
     end
 
     def update
-      persist!
+      persist
+      true
     end
 
     def persist
-      @_new_record = false
-    end
-
-    def persist!
-      attrs = persisted_attributes
-      attrs.delete('id') # no need to persist id as that is key
-      adapter.write(id, attrs)
-      persist
-      true
+      adapter.write(id, persisted_attributes.except('id'))
     end
   end
 end
