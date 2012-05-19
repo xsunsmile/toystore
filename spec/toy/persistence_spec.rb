@@ -199,15 +199,25 @@ describe Toy::Persistence do
     context "with new record" do
       before do
         @doc = User.new(:name => 'John', :age => 28, :accepted_terms => true)
-        @doc.save
       end
 
       it "saves to key" do
+        @doc.save
         User.key?(@doc.id)
       end
 
       it "does not persist virtual attributes" do
+        @doc.save
         @doc.adapter.read(@doc.id).should_not include('accepted_terms')
+      end
+
+      it "is persisted" do
+        @doc.save
+        @doc.persisted?.should be_true
+      end
+
+      it "returns true" do
+        @doc.save.should be_true
       end
     end
 
@@ -218,24 +228,36 @@ describe Toy::Persistence do
         @value    = User.adapter.read(@doc.id)
         @doc.name = 'Bill'
         @doc.accepted_terms = false
-        @doc.save
       end
       let(:doc) { @doc }
 
       it "does not change primary key" do
+        @doc.save
         doc.id.should == @key
       end
 
       it "updates value in adapter" do
+        @doc.save
         User.adapter.read(doc.id).should_not == @value
       end
 
       it "does not persist virtual attributes" do
+        @doc.save
         @doc.adapter.read(@doc.id).should_not include('accepted_terms')
       end
 
       it "updates the attributes in the instance" do
+        @doc.save
         doc.name.should == 'Bill'
+      end
+
+      it "is persisted" do
+        @doc.save
+        @doc.persisted?.should be_true
+      end
+
+      it "returns true" do
+        @doc.save.should be_true
       end
     end
   end
