@@ -156,6 +156,28 @@ describe Toy::Attributes do
     it "ignores keys that are not attributes and do not have accessors defined" do
       lambda { User.new(:taco => 'bell') }.should_not raise_error
     end
+
+    it "uses accessor over writing attribute" do
+      User.attribute :age, Integer
+
+      User.class_eval do
+        def age=(value)
+          write_attribute :age, value + 10
+        end
+      end
+
+      record = User.new
+      record.attributes = {:age => 15}
+      record.age.should be(25)
+    end
+
+    it "uses write_attribute if accessor not present" do
+      User.attribute :age, Integer
+      record = User.new
+      record.should_receive(:respond_to?).with("age=") { false }
+      record.attributes = {:age => 10}
+      record.age.should be(10)
+    end
   end
 
   describe "reading an attribute" do

@@ -52,10 +52,10 @@ module Toy
     def attributes=(attrs, *)
       return if attrs.nil?
       attrs.each do |key, value|
-        if attribute_method?(key)
-          write_attribute(key, value)
-        elsif respond_to?("#{key}=")
+        if respond_to?("#{key}=")
           send("#{key}=", value)
+        elsif attribute_method?(key)
+          write_attribute(key, value)
         end
       end
     end
