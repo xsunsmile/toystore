@@ -27,7 +27,7 @@ module Toy
     end
 
     def initialize(attrs={})
-      initialize_attributes_with_defaults
+      initialize_attributes
       self.attributes = attrs
       write_attribute :id, self.class.next_key(self) unless id?
     end
@@ -98,7 +98,7 @@ module Toy
       read_attribute(key).present?
     end
 
-    def initialize_attributes_with_defaults
+    def initialize_attributes
       @attributes ||= {}
       self.class.defaulted_attributes.each do |attribute|
         @attributes[attribute.name.to_s] = attribute.default

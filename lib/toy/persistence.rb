@@ -43,7 +43,7 @@ module Toy
 
     def initialize_from_database(attrs={})
       @_new_record = false
-      initialize_attributes_with_defaults
+      initialize_attributes
       send("attributes=", attrs, false)
       self
     end
