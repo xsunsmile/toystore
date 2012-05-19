@@ -2,6 +2,8 @@ I will do my best to keep this up to date with significant changes here, startin
 
 * 0.10.1
   * [Allow changing list attribute type](https://github.com/jnunemaker/toystore/commit/a5b1a944622509c32688d2e56088a7d7aa6fc0b3)
+  * [No longer include id in `persisted_attributes`](https://github.com/jnunemaker/toystore/commit/9f713311ebf174e314db700392e27af86ca00662)
+  * [Allow overriding `persist` safely](https://github.com/jnunemaker/toystore/commit/304e50c7e4ac11a365ae00f5d4caed722de31909)
 
 * 0.10.0
   * [Reference proxy api changes](https://github.com/jnunemaker/toystore/pull/5) thanks to jakehow
