@@ -98,7 +98,7 @@ module Toy
     end
 
     def persist
-      adapter.write(id, persisted_attributes.except('id'))
+      adapter.write(id, persisted_attributes)
     end
   end
 end
