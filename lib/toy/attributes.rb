@@ -42,7 +42,7 @@ module Toy
 
     def persisted_attributes
       {}.tap do |attrs|
-        self.class.attributes.each do |name, attribute|
+        self.class.attributes.except('id').each do |name, attribute|
           next if attribute.virtual?
           attrs[attribute.persisted_name] = attribute.to_store(read_attribute(attribute.name))
         end
