@@ -83,7 +83,6 @@ module Toy
   autoload 'Timestamps',              'toy/timestamps'
   autoload 'Validations',             'toy/validations'
 
-  autoload 'Collection',              'toy/collection'
   autoload 'List',                    'toy/list'
   autoload 'Lists',                   'toy/lists'
   autoload 'Reference',               'toy/reference'
