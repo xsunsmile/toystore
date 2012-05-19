@@ -19,6 +19,7 @@ module Toy
     end
 
     def write_attribute(name, value)
+      @attributes ||= {}
       name    = name.to_s
       current = read_attribute(name)
       attribute_will_change!(name) if current != value

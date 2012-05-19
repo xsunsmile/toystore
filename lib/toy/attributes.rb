@@ -71,7 +71,6 @@ module Toy
     private
 
     def read_attribute(key)
-      @attributes ||= {}
       @attributes[key.to_s]
     end
 
