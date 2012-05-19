@@ -498,6 +498,17 @@ describe Toy::List do
     end
   end
 
+  describe "list with :attribute_type option" do
+    before do
+      @type = stub
+      User.list :games, :attribute_type => @type
+    end
+
+    it "uses correct type" do
+      User.attributes['game_ids'].type.should eq(@type)
+    end
+  end
+
   describe "list extension with :extensions option" do
     before do
       old_module = Module.new do

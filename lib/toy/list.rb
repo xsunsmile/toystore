@@ -14,7 +14,7 @@ module Toy
 
       options[:extensions] = modularized_extensions(block, options[:extensions])
 
-      model.attribute(key, Array)
+      model.attribute(key, options.fetch(:attribute_type) { Array })
       create_accessors
     end
 
