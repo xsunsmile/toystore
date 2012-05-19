@@ -169,6 +169,42 @@ describe Toy::Attributes do
     end
   end
 
+  describe "writing an attribute" do
+    before do
+      User.attribute :name, String
+
+      User.class_eval do
+        def alternate_name=(value)
+          write_attribute :name, value
+        end
+      end
+    end
+
+    it "assigns attribute value" do
+      user = User.new
+      user.alternate_name = 'Joe'
+      user.name.should eq('Joe')
+    end
+
+    context "when attribute not defined" do
+      before do
+        User.class_eval do
+          def pirate=(value)
+            write_attribute :pirate, value
+          end
+        end
+
+        @user = User.new
+      end
+
+      it "raises error" do
+        expect {
+          @user.pirate = 'arrrrrr'
+        }.to raise_error(Toy::AttributeNotDefined, "User does not have attribute pirate")
+      end
+    end
+  end
+
   describe "declaring an attribute" do
     before do
       User.attribute :name, String

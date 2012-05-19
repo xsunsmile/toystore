@@ -76,11 +76,11 @@ module Toy
     end
 
     def write_attribute(key, value)
-      @attributes[key.to_s] = attribute_definition(key).try(:from_store, value)
-    end
-
-    def attribute_definition(key)
-      self.class.attributes[key.to_s]
+      key = key.to_s
+      attribute = self.class.attributes.fetch(key) {
+        raise AttributeNotDefined, "#{self.class} does not have attribute #{key}"
+      }
+      @attributes[key.to_s] = attribute.from_store(value)
     end
 
     def attribute_method?(key)

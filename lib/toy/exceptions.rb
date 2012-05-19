@@ -1,6 +1,8 @@
 module Toy
   class Error < StandardError; end
 
+  class AttributeNotDefined < Error; end
+
   class RecordInvalid < Error
     attr_reader :record
     def initialize(record)
